@@ -7,21 +7,21 @@ class Board extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            sentence: "חתול",
-            guessedLetters: ['ח', 'H', 'A', "S", "B", "I", "ל", "M"]
+          sentence: "Elephant",
+          guessedLetters: ['E', 'H', 'A', 'N', 'T'],
+          lastLetterUpdated: ['T']
         };
     }
 
-    renderPlayedText = (number) => {
-        return this.props.gameGrid[number] || ''
-    };
     renderWord = (word) => {
-        const {guessedLetters} = this.state;
+        const {guessedLetters, lastLetterUpdated} = this.state;
         return word.split('').map( letter => {
             const letterFormatted = letter.toUpperCase();
             const isIncluded = guessedLetters.includes(letterFormatted);
+            let styleCalc = isIncluded ? 'CardSelected' : '';
+            styleCalc = styleCalc + (lastLetterUpdated.includes(letterFormatted) ? ' CardSelectedLast' : '');
             return (
-              <Card className={isIncluded &&  'CardSelected'}>
+              <Card className={styleCalc}>
                   <Card.Body>
                       <Card.Title>{isIncluded ? letterFormatted : " "}</Card.Title>
                   </Card.Body>

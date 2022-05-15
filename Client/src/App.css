@@ -64,6 +64,10 @@
   color: black;
   background-color: gold;
 }
+.containerBoard .CardSelectedLast {
+  animation: show-image 2s ease-in-out 100ms;
+  animation-iteration-count: 1;
+}
 .containerBoard .card .card-body {
   width: 100px;
   height: 100px;
@@ -77,4 +81,19 @@
   align-items: center;
   justify-content: center;
   font-size: 60px;
+}
+@keyframes show-image
+{
+  from {
+    transform: rotateY(0deg);
+  }
+  to {
+    transform: rotateY(359deg);
+  }
+}
+.scoreBoard {
+  color: white;
+}
+.scoreBoard tbody tr:nth-child(odd) td{
+  background-color: #61dafb;
 }
