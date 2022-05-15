@@ -13,14 +13,13 @@ export default (state = initial_state, action) => {
         case START_GAME:
             return {
                 ...state,
-                roomNumber: action.payload.roomNumber,
-            show: false
+                roomNumber: action.payload.roomNumber
         };
         case CATEGORIES_FETCHED:
-                return {
-                    ...state,
-                    categories: action.payload,
-                show: false
+            return {
+                ...state,
+                categories: action.payload,
+                selectedCategory: state.selectedCategory || action.payload[0]
         };
         case UPDATE_SELECTED_CATEGORY:
             return {

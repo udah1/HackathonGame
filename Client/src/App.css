@@ -48,8 +48,6 @@
   }
 }
 .containerBoard .scoreForGame {
-  text-align: left;
-  flex-direction: row-reverse;
   font-weight: bold;
 }
 .containerBoard .scoreForGame .colScoreLabel {

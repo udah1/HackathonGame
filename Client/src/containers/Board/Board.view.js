@@ -1,10 +1,10 @@
 import React, {Component} from 'react';
 import {connect} from 'react-redux';
-import Card from 'react-bootstrap/Card';
 import { withRouter } from "react-router-dom";
 import {subscribe_events, play_guess} from './Board.actions'
 import Dictaphone from './Dictaphone';
 import SpeechRecognition, { useSpeechRecognition } from 'react-speech-recognition';
+import {Form, Card} from'react-bootstrap';
 
 class Board extends Component {
 
@@ -85,23 +85,27 @@ class Board extends Component {
   };
 
   render() {
-    const {sentence, scoreForGame, gameStatus} = this.props;
+    const {sentence, scoreForGame, gameStatus, selectedCategory} = this.props;
     if (!sentence) return (<></>);
     return (
       <div className="container containerBoard">
+        <Form.Label className="App-header">גלגל המזל</Form.Label>
         <div className="row scoreForGame">
-          <div className="col colScoreLabel">Score</div>
+            <div className="col colScoreLabel">קטגוריה</div>
+            <div className="col">{selectedCategory}</div>
+        </div>
+        <div className="row scoreForGame">
+          <div className="col colScoreLabel">זכייה</div>
           <div className="col">{scoreForGame}</div>
         </div>
         <div className="row sentence">
           {this.renderSentence()}
         </div>
-        {gameStatus && gameStatus.status === "GAME_OVER" && <div className="row">No one guessed</div>
+        {gameStatus && gameStatus.status === "GAME_OVER" && <div className="row">אף אחד לא ניחש את התשובה</div>
         }
-        {gameStatus && gameStatus.winner &&
+        {(gameStatus && gameStatus.winner) &&
           <div className="row">
-            {gameStatus.winner && <div>Winner is {gameStatus.winner}</div>}
-            <div>Sentence `{gameStatus.guess}` was guessed by {gameStatus.user}</div>
+            {gameStatus.winner && <div>הזוכה הוא {gameStatus.winner}</div>}
           </div>
         }
         <Dictaphone submitGuess={(transcript, interimTranscript) => this.submitGuess(transcript, interimTranscript)}/>
@@ -122,7 +126,8 @@ function mapDispatchToProps(dispatch) {
 function mapStateToProps(state) {
   return {
     ...state.reducer.board,
-    ...state.reducer.login
+    ...state.reducer.login,
+    ...state.reducer.playerList
 
   }
 }
