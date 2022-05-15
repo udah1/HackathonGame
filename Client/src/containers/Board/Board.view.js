@@ -1,19 +1,15 @@
-import React, {Component} from 'react'
-import {connect}    from 'react-redux'
-import Card from 'react-bootstrap/Card'
-import {subscribe_events, play_move} from './Board.actions'
+import React, {Component} from 'react';
+import {connect}    from 'react-redux';
+import Card from 'react-bootstrap/Card';
 
 class Board extends Component {
 
     constructor(props) {
         super(props);
         this.state = {
-            sentence: "Elephant ",
-            guessedLetters: ['L', 'H', 'A', "S", "B", "I", "E", "M"]
+            sentence: "חתול",
+            guessedLetters: ['ח', 'H', 'A', "S", "B", "I", "ל", "M"]
         };
-        this.gamePlainGrid = [[1, 2, 3], [4, 5, 6], [7, 8, 9]];
-        // this.socket = props.socket;
-        // props.subscribeEvents(this.socket, props);
     }
 
     renderPlayedText = (number) => {
@@ -52,7 +48,6 @@ class Board extends Component {
 
 
     render() {
-        const {roomNumber, sign, myTurn, playMove} = this.props;
         const {sentence} = this.state;
         if(!sentence) return (<></>);
         return (
@@ -69,8 +64,6 @@ class Board extends Component {
 
 function mapDispatchToProps(dispatch) {
     return {
-        subscribeEvents: (socket, props) => dispatch(subscribe_events(socket, props.sign)),
-        playMove: (socket, number, props) => dispatch(play_move(socket, number, props))
     }
 }
 

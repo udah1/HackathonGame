@@ -1,7 +1,5 @@
 import * as io from 'socket.io-client';
 import React, {Component} from 'react';
-// import Board from '../Board/Board.view'
-// import Rooms from '../Rooms/Rooms.view'
 import {subscribe_events, join_room, create_new_room} from './Login.actions'
 import {connect} from 'react-redux'
 import {Form, Button} from'react-bootstrap'
@@ -14,11 +12,10 @@ class Login extends Component {
         this.state = {
             userName: ""
         }
-        //props.subscribeEvents(this.socket);
     }
 
     render() {
-        const {roomNumber, joinRoom, createRoom, show} = this.props;
+        const {joinRoom, createRoom} = this.props;
 
         return (
             <div className="">
