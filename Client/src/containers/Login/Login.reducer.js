@@ -44,7 +44,7 @@ export default (state = initial_state, action) => {
         case ROOM_CREATED:
                 return {
                     ...state,
-                    roomNumber: action.payload.res.id,
+                    roomNumber: state.roomNumber || action.payload.res.id,
                     gamePlayers: action.payload.res.players,
                     gameOwner: action.payload.gameOwner,
                     roomCreated: true

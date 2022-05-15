@@ -86,6 +86,8 @@ class Board extends Component {
 
   render() {
     const {sentence, scoreForGame, gameStatus, selectedCategory} = this.props;
+    const {selectedRoom, gameOwner, roomNumber} = this.props;
+    console.log("**********  " + gameOwner ? roomNumber : selectedRoom);
     if (!sentence) return (<></>);
     return (
       <div className="container containerBoard">
