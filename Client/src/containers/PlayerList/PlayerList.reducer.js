@@ -1,6 +1,7 @@
 import {
     START_GAME,
-    CATEGORIES_FETCHED
+    CATEGORIES_FETCHED,
+    UPDATE_SELECTED_CATEGORY
 } from './PlayerList.actions';
 
 const initial_state = {
@@ -21,10 +22,14 @@ export default (state = initial_state, action) => {
                     categories: action.payload,
                 show: false
         };
+        case UPDATE_SELECTED_CATEGORY:
+            return {
+                ...state,
+                selectedCategory: action.payload
+        };
 
         default:
             return state
     }
-
 }
 

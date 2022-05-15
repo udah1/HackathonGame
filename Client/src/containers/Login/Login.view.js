@@ -38,22 +38,22 @@ class Login extends Component {
         const availableRooms = Object.keys(rooms).map((room, index) => (<option key={room} value={room}>{room}</option>));
 
         return (
-            <div className="">
+            <div className="container">
                 <Form>
-                    <Form.Label className="App-header">Wheel of Fortune</Form.Label>
+                    <Form.Label className="App-header">גלגל המזל</Form.Label>
                     <Form.Group className="mb-3">
-                        <Form.Label className="">User</Form.Label>
-                        <Form.Control type="text" placeholder="Enter user name" value={user} onChange={updateUserName} />
+                        <Form.Label className="">שם משתמש</Form.Label>
+                        <Form.Control size="lg" type="text" placeholder="הכנס שם משתמש" value={user} onChange={updateUserName} />
                     </Form.Group>
                     <Form.Group className="mb-3">
-                        <Form.Label className="">Available Rooms</Form.Label>
-                        <Form.Control as="select" defaultValue={selectedRoom || ""} onChange={updateSelectedRoom}>
+                        <Form.Label className="">חדרים פנויים</Form.Label>
+                        <Form.Control size="lg" as="select" defaultValue={selectedRoom || ""} onChange={updateSelectedRoom}>
                             {availableRooms}
                         </Form.Control>
                     </Form.Group>
                     <div className="row">
-                        <Button className="col-sm-5 login-button" variant="primary" onClick={this.handleCreateRoom}>Start new game</Button>
-                        <Button className="col-sm-5 login-button" variant="primary" onClick={this.handleJoinRoom}>Join</Button>
+                        <Button className="col-sm-5 login-button" variant="primary" onClick={this.handleCreateRoom}>התחל משחק חדש</Button>
+                        <Button className="col-sm-5 login-button" variant="primary" onClick={this.handleJoinRoom}>הצטרף</Button>
                     </div>
                 </Form>
             </div>

@@ -10,13 +10,8 @@
   text-direction: ltr;
 }
 
-.App .form-label {
-  margin-right: 1rem;
-  float: left;
-}
-
-.App .form-control {
-  text-align: left;
+.App .container {
+  width: 50%;
 }
 
 .login-button{
@@ -37,7 +32,7 @@
 }
 
 .App-header {
-  font-size: calc(30px + 2vmin);
+  font-size: calc(50px + 2vmin);
 }
 
 .App-link {
