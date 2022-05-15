@@ -31,13 +31,24 @@ export const join_room = (socket, roomNumber, user) => {
     }
 };
 
+export const room_joined = (socket) => {
+    return dispatch => {
+        socket.on('room-joined', (res) => {
+            dispatch({
+                 type: ROOM_JOINED,
+                 payload: res
+             });
+        });
+    }
+};
+
 export const create_new_room = (socket, user) => {
     socket.emit('create-room', {user});
     return dispatch => {
         socket.on('room-created', (res) => {
             dispatch({
                 type: ROOM_CREATED,
-                payload: res
+                payload: {res, gameOwner: user}
             });
         });
     }

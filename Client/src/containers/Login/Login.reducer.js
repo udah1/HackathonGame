@@ -38,13 +38,16 @@ export default (state = initial_state, action) => {
                 ...state,
                 lastRoomJoiner: action.payload.new,
                 currentRoom: action.payload.room,
+                gamePlayers: action.payload.room.players,
                 roomJoined: true
         };
         case ROOM_CREATED:
                 return {
                     ...state,
-                    roomNumber: action.payload.id,
-                roomCreated: true
+                    roomNumber: action.payload.res.id,
+                    gamePlayers: action.payload.res.players,
+                    gameOwner: action.payload.gameOwner,
+                    roomCreated: true
         };
         case START_GAME:
             return {

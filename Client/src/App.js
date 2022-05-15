@@ -3,7 +3,7 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 import './App.css';
 import Login from './containers/Login/Login.view';
 import Board from './containers/Board/Board.view';
-import Score from './containers/Score/Score.view';
+import PlayerList from './containers/PlayerList/PlayerList.view';
 import * as io from 'socket.io-client';
 import {Switch, Route} from 'react-router-dom';
 
@@ -20,7 +20,7 @@ class App extends Component {
                 <Switch>
                     <Route exact path='/' component={() => <Login socket={this.socket} />}></Route>
                     <Route exact path='/board' component={() => <Board socket={this.socket} />}></Route>
-                    <Route exact path='/score' component={() => <Score socket={this.socket} />}></Route>
+                    <Route exact path='/players' component={() => <PlayerList socket={this.socket} />}></Route>
                 </Switch>
             </div>
         );

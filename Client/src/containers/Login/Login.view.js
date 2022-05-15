@@ -14,7 +14,7 @@ class Login extends Component {
     componentDidUpdate(prevProps, prevState, snapshot) {
         const {roomJoined, roomCreated, history} = this.props;
         if(roomJoined || roomCreated) {
-            history.push('/board');
+            history.push('/players');
         }
     }
 
