@@ -20,7 +20,7 @@ class Board extends Component {
     SpeechRecognition.startListening({ continuous: true, language: 'he-IL' });
   }
   componentDidUpdate(prevProps, prevState, snapshot) {
-    if((prevProps.gameStatus && !prevProps.gameStatus.guess && !!this.props.gameStatus.guess)
+    if((prevProps.gameStatus && !prevProps.gameStatus.winner && !!this.props.gameStatus.winner)
       ||  this.props.gameStatus.status === "GAME_OVER"
     ){
       this.props.getRoomInfo(this.props.socket);
