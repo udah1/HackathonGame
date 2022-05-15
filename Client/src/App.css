@@ -45,7 +45,17 @@
     transform: rotate(360deg);
   }
 }
-
+.containerBoard .scoreForGame {
+  text-align: left;
+  flex-direction: row-reverse;
+  font-weight: bold;
+}
+.containerBoard .scoreForGame .colScoreLabel {
+  max-width: 150px;
+}
+.containerBoard .sentence {
+  margin-top: 50px;
+}
 .containerBoard .sentenceRow {
   width: fit-content;
 }

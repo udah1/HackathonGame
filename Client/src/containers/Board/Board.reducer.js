@@ -1,40 +1,42 @@
 import {
-    PLAY_MOVE,
-    RECEIVE_MOVE
+    INIT_BORAD,
+    RECIEVE_LETTER
 } from './Board.actions';
 
 const initial_state = {
-    show: true,
-    gameGrid: []
+    sentence: "חתלתול",
+    guessedLetters: ['ת', 'A', 'N', 'T'],
+    lastLetterUpdated: ['T'],
+    scoreForGame: 200,
+    scoreStep: 0
 }
 export default (state = initial_state, action) => {
 
     switch (action.type) {
-        case PLAY_MOVE:
+        case INIT_BORAD:
+            let stepSize = 0;
+            const sentenceLength = state.sentence.length;
+            if(sentenceLength > 10) {
+                stepSize = 5;
+            } else {
+                stepSize = 10;
+            }
             return {
                 ...state,
-                gameGrid: action.gameGrid,
-                myTurn: false,
-                sign: action.sign
+                sentence: action.payload.sentence,
+                guessedLetters: [],
+                lastLetterUpdated: [],
+                scoreForGame: 100,
+                scoreStep: stepSize
             };
-        case RECEIVE_MOVE:
-            if (action.payload.winner === null) {
-                const gameGrid = state.gameGrid.slice();
-                const position = action.payload.position;
-                gameGrid[position] = action.payload.playedText
-                return {
-                    ...state,
-                    gameGrid,
-                    myTurn: true
-                }
-            } else {
-                alert(action.payload.winner);
-                return {
-                    ...state,
-                    gameGrid: [],
-                    myTurn: state.sign === 'X'
-                }
-            }
+        case RECIEVE_LETTER:
+            const updatedScore = state.scoreForGame - state.scoreStep;
+            return {
+                ...state,
+                guessedLetters: [...state.guessedLetters, action.payload.letter],
+                lastLetterUpdated: [action.payload.letter],
+                score: updatedScore
+            };
         default:
             return state
     }

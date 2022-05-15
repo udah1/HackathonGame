@@ -17,9 +17,9 @@ class App extends Component {
         return (
             <Provider store={store}>
                 <div className="App">
-                    <Login/>
+                    {/*<Login/>*/}
                     <Board/>
-                    <Score />
+                    {/*<Score />*/}
                 </div>
             </Provider>
         );

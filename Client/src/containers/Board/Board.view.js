@@ -1,16 +1,20 @@
 import React, {Component} from 'react';
 import {connect}    from 'react-redux';
 import Card from 'react-bootstrap/Card';
+import {subscribe_events} from './Board.actions'
 
 class Board extends Component {
 
     constructor(props) {
         super(props);
         this.state = {
-          sentence: "Elephant",
-          guessedLetters: ['E', 'H', 'A', 'N', 'T'],
-          lastLetterUpdated: ['T']
+          sentence: "חתלתול",
+          guessedLetters: ['ת', 'A', 'N', 'T'],
+          lastLetterUpdated: ['T'],
+          scoreForGame: 100
         };
+        this.socket = props.socket;
+        //props.subscribeEvents(this.socket, props);
     }
 
     renderWord = (word) => {
@@ -30,7 +34,7 @@ class Board extends Component {
         })
     };
     renderSentence = () => {
-        const {sentence} = this.state;
+      const {sentence} = this.props;
         const myArray = sentence.split(" ");
         return myArray.map( item => {
             return (
@@ -48,11 +52,15 @@ class Board extends Component {
 
 
     render() {
-        const {sentence} = this.state;
+      const {sentence, scoreForGame} = this.props;
         if(!sentence) return (<></>);
         return (
             <div className="container containerBoard">
-                <div className="row">
+              <div className="row scoreForGame">
+                <div className="col colScoreLabel">Score</div>
+                <div className="col">{scoreForGame}</div>
+              </div>
+                <div className="row sentence">
                     {this.renderSentence()}
                 </div>
             </div>
@@ -64,6 +72,7 @@ class Board extends Component {
 
 function mapDispatchToProps(dispatch) {
     return {
+      subscribeEvents: (socket, props) => dispatch(subscribe_events(socket, props.sign)),
     }
 }
 
