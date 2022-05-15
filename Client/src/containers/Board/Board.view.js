@@ -7,7 +7,6 @@ class Board extends Component {
 
     constructor(props) {
         super(props);
-        this.title = "Realtime Tic Tac Toe Using REACT!!!! & Socket.IO";
         this.state = {
           sentence: "Hello my name is Slim Shady"
         };
@@ -47,46 +46,11 @@ class Board extends Component {
         const {roomNumber, sign, myTurn, playMove} = this.props;
         const {sentence} = this.state;
         if(!sentence) return (<></>);
-        const myArray = sentence.split(" ");
-        const sentenceLength = sentence.length;
         return (
             <div className="container containerBoard">
                 <div className="row heading-row">
-                    <div className="col-md-12 text-center app-heading">
-                        <h2>{this.title}</h2>
-                    </div>
                     {sentence}
                     {this.renderSentence()}
-                    <div className="col-md-6 text-center">
-                        <div className={"player-heading" + ((myTurn && sign === 'X') || (!myTurn && sign === 'O') ? ' current-player' : '')}>
-                            Player 1
-                        </div>
-                    </div>
-                    <div className="col-md-6 text-center">
-                        <div className={"player-heading" + ((myTurn && sign === 'O') || (!myTurn && sign === 'X') ? ' current-player' : '')}>
-                            Player 2
-                        </div>
-                    </div>
-                </div>
-                <div className="row game-row">
-                    <div className="text-center game-container">
-                        <table id="game" className="game-grid">
-                            <tbody>
-                            {this.gamePlainGrid.map((item, key) => (
-                                <tr key={"tr-" + key}>
-                                    {item.map((number, key2) => (
-                                        <td className={"grid-" + number} id={"grid-" + number} key={"td-" + key + key2}
-                                            onClick={() => playMove(this.socket, number, this.props)}>
-                                            {this.renderPlayedText(number)}
-                                        </td>
-                                    ))}
-                                </ tr>
-                            ))}
-                            </tbody>
-                        </table>
-                        <p />
-                        <h6 className="text-center">You are in Room Number {roomNumber}.</h6>
-                    </div>
                 </div>
             </div>
 
