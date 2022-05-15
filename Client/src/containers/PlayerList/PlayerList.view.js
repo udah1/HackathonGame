@@ -30,8 +30,9 @@ class PlayerList extends Component {
     };
 
     handleStartGame = () => {
-        const {selectedRoom, socket, startGame, categories, history} = this.props;
-        startGame(socket, selectedRoom, categories[0]);
+        const {selectedRoom, roomNumber, socket, startGame, categories, history, gameOwner} = this.props;
+        const room = gameOwner ? roomNumber : selectedRoom;
+        startGame(socket, room, categories[0]);
         history.push('/board');
     }
 
@@ -65,7 +66,7 @@ function mapDispatchToProps(dispatch) {
     return {
         subscribeEvents: (socket) => dispatch(room_joined(socket)),
         getCategories: () => dispatch(get_categories()),
-        startGame: (socket, selectedRoom, category) => dispatch(start_game(socket, selectedRoom, category))
+        startGame: (socket, selectedRoom, category) => start_game(socket, selectedRoom, category)
     }
 }
 
