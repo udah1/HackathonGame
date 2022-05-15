@@ -1,7 +1,5 @@
 import * as io from 'socket.io-client';
 import React, {Component} from 'react';
-// import Board from '../Board/Board.view'
-// import Rooms from '../Rooms/Rooms.view'
 import {subscribe_events, join_room, create_new_room, get_rooms, update_selected_room} from './Login.actions'
 import {connect} from 'react-redux'
 import {Form, Button} from'react-bootstrap'
@@ -17,7 +15,7 @@ class Login extends Component {
     }
 
     render() {
-        const {roomNumber, joinRoom, createRoom, userName, availableRooms, selectedRoom, updateSelectedRoom} = this.props;
+        const {joinRoom, createRoom, userName, availableRooms, selectedRoom, updateSelectedRoom} = this.props;
         const rooms = availableRooms.map((room) => (<option key={room} value={room}>{room}</option>));
 
         return (

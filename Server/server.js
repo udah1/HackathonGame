@@ -8,8 +8,13 @@ const cors = require('cors');
 
 const socketEvents = require('./utils/socket');
 const routes = require('./utils/routes');
-const redisDB = require("./utils/db").connectDB();
 
+
+const data = {
+    totalRoomCount: 0,
+    emptyRooms: [],
+    fullRooms: []
+};
 
 class Server{
 
@@ -20,6 +25,7 @@ class Server{
         this.app = express();
         this.http = http.Server(this.app);
         this.socket = socketio(this.http);
+
     }
 
     appConfig(){
@@ -31,16 +37,17 @@ class Server{
         );
     }
 
-    /* Including app Routes starts*/    includeRoutes(){
-    new routes(this.app,redisDB).routesConfig();
-    new socketEvents(this.socket,redisDB).socketConfig();
-}
+    /* Including app Routes starts*/
+    async includeRoutes(){
+        new routes(this.app, data).routesConfig();
+        new socketEvents(this.socket, data).socketConfig();
+    }
     /* Including app Routes ends*/
 
-    appExecute(){
+    async appExecute(){
 
         this.appConfig();
-        this.includeRoutes();
+        await this.includeRoutes();
 
         this.http.listen(this.port, this.host, () => {
             console.log(`Listening on http://${this.host}:${this.port}`);
