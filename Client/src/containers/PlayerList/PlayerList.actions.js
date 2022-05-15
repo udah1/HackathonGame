@@ -28,7 +28,7 @@ export const start_game = (socket, selectedRoom) => {
 
 export const get_categories = () => {
     return dispatch => {
-        return fetch("http://localhost:4000/getRoomStats")
+        return fetch("http://192.168.41.199:4000/categories")
             .then(handleErrors)
             .then(res => res.json())
     .then(res => dispatch({
