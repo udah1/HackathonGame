@@ -23,7 +23,8 @@ class Board extends Component {
     if((prevProps.gameStatus && !prevProps.gameStatus.winner && !!this.props.gameStatus.winner)
       ||  this.props.gameStatus.status === "GAME_OVER"
     ){
-      this.props.getRoomInfo(this.props.socket, this.props.roomNumber);
+      const {gameOwner , roomNumber, selectedRoom} = this.props;
+      this.props.getRoomInfo(this.props.socket, gameOwner ? roomNumber : selectedRoom);
       this.props.resetGame();
       setTimeout(() => this.props.history.push('/players'), 5000);
     }
@@ -90,7 +91,7 @@ class Board extends Component {
   render() {
     const {sentence, scoreForGame, gameStatus, selectedCategory} = this.props;
     const {selectedRoom, gameOwner, roomNumber} = this.props;
-    console.log("**********  " + gameOwner ? roomNumber : selectedRoom);
+    console.log("**********  " + JSON.stringify(gameStatus));
     if (!sentence) return (<></>);
     return (
       <div className="container containerBoard">
