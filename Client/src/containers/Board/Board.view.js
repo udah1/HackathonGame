@@ -1,16 +1,22 @@
 import React, {Component} from 'react';
 import {connect} from 'react-redux';
 import Card from 'react-bootstrap/Card';
-import {subscribe_events} from './Board.actions'
+import {subscribe_events, play_guess} from './Board.actions'
+import Dictaphone from './Dictaphone';
+import SpeechRecognition, { useSpeechRecognition } from 'react-speech-recognition';
 
 class Board extends Component {
 
   constructor(props) {
     super(props);
     this.socket = props.socket;
+    this.sentenceToSubmit = null;
     //props.subscribeEvents(this.socket, props);
   }
 
+  componentDidMount() {
+    SpeechRecognition.startListening({ continuous: true, language: 'he-IL' });
+  }
 
   renderSentence = () => {
     const {sentence, lastLetterIndexUpdated} = this.props;
@@ -49,12 +55,30 @@ class Board extends Component {
     });
   };
 
+  submitGuess = (transcript, interimTranscript) => {
+    const {playGuess} = this.props;
+    let value = '';
+    if(!interimTranscript.length) {
+      return;
+    }
+    if(interimTranscript !== this.sentenceToSubmit ) {
+
+      if(interimTranscript.includes(this.sentenceToSubmit)){
+        value = interimTranscript.replace(this.sentenceToSubmit, '');
+      }
+      else {
+        value = interimTranscript;
+      }
+      this.sentenceToSubmit = value.trim();
+    }
+  };
 
   render() {
     const {sentence, scoreForGame} = this.props;
     if (!sentence) return (<></>);
     return (
       <div className="container containerBoard">
+
         <div className="row scoreForGame">
           <div className="col colScoreLabel">Score</div>
           <div className="col">{scoreForGame}</div>
@@ -62,6 +86,7 @@ class Board extends Component {
         <div className="row sentence">
           {this.renderSentence()}
         </div>
+        <Dictaphone submitGuess={(transcript, interimTranscript) => this.submitGuess(transcript, interimTranscript)}/>
       </div>
 
     );
@@ -72,12 +97,14 @@ class Board extends Component {
 function mapDispatchToProps(dispatch) {
   return {
     subscribeEvents: (socket, props) => dispatch(subscribe_events(socket, props.sign)),
+    playGuess: (socket, number, sentence, user) => dispatch(play_guess(socket, number, sentence, user))
   }
 }
 
 function mapStateToProps(state) {
   return {
-    ...state.reducer.board
+    ...state.reducer.board,
+    user: state.reducer.user
   }
 }
 
