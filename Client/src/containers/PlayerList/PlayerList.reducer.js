@@ -31,7 +31,8 @@ export default (state = initial_state, action) => {
         case INIT_BORAD:
             return {
                 ...state,
-                gameStarted: true
+                gameStarted: true,
+                selectedCategory: action.payload.category
         };
         case RESET_GAME:
             return {
