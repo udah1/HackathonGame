@@ -30,7 +30,8 @@ class PlayerList extends Component {
     };
 
     handleStartGame = () => {
-        const {selectedRoom, roomNumber, socket, startGame, categories, history, gameOwner, selectedCategory} = this.props;
+        const {selectedRoom, roomNumber, socket, startGame, categories, history, gameOwner, selectedCategory, resetGame} = this.props;
+        resetGame();
         const room = gameOwner ? roomNumber : selectedRoom;
         startGame(socket, room, selectedCategory || categories[0]);
         history.push('/board');
