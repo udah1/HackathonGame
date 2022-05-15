@@ -11,25 +11,18 @@ const routes = require('./utils/routes');
 
 
 const data = {
-    rooms: {
-        1: {
-            players: {
-                'uda': {
-                    points: 100
-                }
-            },
-            isFull: false,
-            generatedClause: '',
-            selectedLetters: [],
-            gamePoints: 100,
-        }
-    }
+    rooms: {}
 };
 
 class Server{
 
     constructor(){
         this.port =  process.env.PORT || 4000;
+        process.on('uncaughtException', function (err) {
+            console.error(err);
+            console.log("Node NOT Exiting...");
+        });
+
         this.host = '0.0.0.0';
 
         this.app = express();
@@ -67,3 +60,4 @@ class Server{
 
 const app = new Server();
 app.appExecute();
+
