@@ -37,7 +37,8 @@ export default (state = initial_state, action) => {
             return {
                 ...state,
                 lastRoomJoiner: action.payload.new,
-                currentRoom: action.payload.room
+                currentRoom: action.payload.room,
+                roomJoined: true
         };
         case ROOM_CREATED:
                 return {

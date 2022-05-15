@@ -11,19 +11,24 @@ class Login extends Component {
         props.subscribeEvents(props.socket);
     }
 
-    handleCreateRoom = () => {
-        const {createRoom, socket, user, history} = this.props;
-        if(user) {
-            createRoom(socket, user);
+    componentDidUpdate(prevProps, prevState, snapshot) {
+        const {roomJoined, roomCreated, history} = this.props;
+        if(roomJoined || roomCreated) {
             history.push('/board');
         }
     }
 
+    handleCreateRoom = () => {
+        const {createRoom, socket, user} = this.props;
+        if(user) {
+            createRoom(socket, user);
+        }
+    }
+
     handleJoinRoom = () => {
-        const {joinRoom, socket, selectedRoom, user, history} = this.props;
+        const {joinRoom, socket, selectedRoom, user} = this.props;
         if(selectedRoom && user) {
             joinRoom(socket, selectedRoom, user);
-            history.push('/board');
         }
     }
 
@@ -46,9 +51,9 @@ class Login extends Component {
                             {availableRooms}
                         </Form.Control>
                     </Form.Group>
-                    <div>
-                        <Button variant="primary" onClick={this.handleCreateRoom}>Start new game</Button>
-                        <Button variant="primary" onClick={this.handleJoinRoom}>Join</Button>
+                    <div className="row">
+                        <Button className="col-sm-5 login-button" variant="primary" onClick={this.handleCreateRoom}>Start new game</Button>
+                        <Button className="col-sm-5 login-button" variant="primary" onClick={this.handleJoinRoom}>Join</Button>
                     </div>
                 </Form>
             </div>
