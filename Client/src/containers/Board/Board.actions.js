@@ -1,4 +1,5 @@
 export const INIT_BORAD = 'INIT_BORAD';
+export const RESET_BORAD = 'RESET_BORAD';
 export const RECIEVE_LETTER = 'RECIEVE_LETTER';
 export const RECEIVE_GUESS = 'RECEIVE_GUESS';
 export const ALL_REVEALED = 'ALL_REVEALED';
