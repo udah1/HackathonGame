@@ -4,38 +4,33 @@ import {
 } from './Board.actions';
 
 const initial_state = {
-    sentence: "חתלתול",
-    guessedLetters: ['ת', 'A', 'N', 'T'],
-    lastLetterUpdated: ['T'],
-    scoreForGame: 200,
-    scoreStep: 0
+    sentence: "*ת***ל",
+    lastLetterIndexUpdated: [5],
+    scoreForGame: 200
 }
 export default (state = initial_state, action) => {
 
     switch (action.type) {
         case INIT_BORAD:
-            let stepSize = 0;
-            const sentenceLength = state.sentence.length;
-            if(sentenceLength > 10) {
-                stepSize = 5;
-            } else {
-                stepSize = 10;
-            }
             return {
                 ...state,
                 sentence: action.payload.sentence,
                 guessedLetters: [],
-                lastLetterUpdated: [],
-                scoreForGame: 100,
-                scoreStep: stepSize
+                lastLetterIndexUpdated: [],
+                scoreForGame: action.payload.score
             };
         case RECIEVE_LETTER:
-            const updatedScore = state.scoreForGame - state.scoreStep;
+            let {sentence} = state;
+            let lastLetterIndexUpdated = [];
+            for(let i=0; i < action.payload.letters.length; i++) {
+                sentence[action.payload.letters[i].ind] = action.payload.letters[i].val;
+                lastLetterIndexUpdated.push(action.payload.letters[i].ind);
+            }
             return {
                 ...state,
-                guessedLetters: [...state.guessedLetters, action.payload.letter],
-                lastLetterUpdated: [action.payload.letter],
-                score: updatedScore
+                sentence: sentence,
+                lastLetterIndexUpdated: lastLetterIndexUpdated,
+                scoreForGame: action.payload.score
             };
         default:
             return state
