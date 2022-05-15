@@ -1,6 +1,9 @@
 import React, {Component} from 'react';
 import {connect}    from 'react-redux';
 import Table from 'react-bootstrap/Table'
+import { withRouter } from "react-router-dom";
+
+
 class Score extends Component {
 
     constructor(props) {
@@ -60,4 +63,4 @@ function mapStateToProps(state) {
     }
 }
 
-export default connect(mapStateToProps, mapDispatchToProps)(Score)
+export default connect(mapStateToProps, mapDispatchToProps)(withRouter(Score))

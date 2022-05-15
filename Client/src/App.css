@@ -7,14 +7,21 @@
   justify-content: center;
   font-size: calc(10px + 2vmin);
   color: white;
+  text-direction: ltr;
 }
 
 .App .form-label {
-  display: flex;
   margin-right: 1rem;
+  float: left;
 }
 
+.App .form-control {
+  text-align: left;
+}
 
+.login-button{
+  margin: 0 1rem;
+}
 
 
 

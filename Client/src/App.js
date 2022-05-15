@@ -1,27 +1,28 @@
 import React, {Component} from 'react';
-import {Provider} from 'react-redux'
 import 'bootstrap/dist/css/bootstrap.min.css';
 import './App.css';
 import Login from './containers/Login/Login.view';
 import Board from './containers/Board/Board.view';
-import Score from './containers/Score/Score.view';
-import rootReducer from './reducers';
-import {applyMiddleware, createStore} from 'redux'
-import thunk from "redux-thunk";
-
-const store = createStore(rootReducer, {reducer: {}}, applyMiddleware(thunk));
+import PlayerList from './containers/PlayerList/PlayerList.view';
+import * as io from 'socket.io-client';
+import {Switch, Route} from 'react-router-dom';
 
 class App extends Component {
 
+    constructor(props) {
+        super(props)
+        this.socket = io.connect('192.168.41.199:4000');
+    }
+
     render() {
         return (
-            <Provider store={store}>
-                <div className="App">
-                    {/*<Login/>*/}
-                    <Board/>
-                    {/*<Score />*/}
-                </div>
-            </Provider>
+            <div className="App">
+                <Switch>
+                    <Route exact path='/' component={() => <Login socket={this.socket} />}></Route>
+                    <Route exact path='/board' component={() => <Board socket={this.socket} />}></Route>
+                    <Route exact path='/players' component={() => <PlayerList socket={this.socket} />}></Route>
+                </Switch>
+            </div>
         );
     }
 }

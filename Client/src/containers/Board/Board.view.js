@@ -1,6 +1,7 @@
 import React, {Component} from 'react';
 import {connect} from 'react-redux';
 import Card from 'react-bootstrap/Card';
+import { withRouter } from "react-router-dom";
 import {subscribe_events, play_guess} from './Board.actions'
 import Dictaphone from './Dictaphone';
 import SpeechRecognition, { useSpeechRecognition } from 'react-speech-recognition';
@@ -78,7 +79,6 @@ class Board extends Component {
     if (!sentence) return (<></>);
     return (
       <div className="container containerBoard">
-
         <div className="row scoreForGame">
           <div className="col colScoreLabel">Score</div>
           <div className="col">{scoreForGame}</div>
@@ -103,9 +103,8 @@ function mapDispatchToProps(dispatch) {
 
 function mapStateToProps(state) {
   return {
-    ...state.reducer.board,
-    user: state.reducer.user
+    ...state.reducer.board
   }
 }
 
-export default connect(mapStateToProps, mapDispatchToProps)(Board)
+export default connect(mapStateToProps, mapDispatchToProps)(withRouter(Board))

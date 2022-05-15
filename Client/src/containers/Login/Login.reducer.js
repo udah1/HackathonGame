@@ -1,59 +1,53 @@
 import {
     START_GAME,
-    JOIN_ROOM,
     ROOM_CREATED,
-    FETCHING_ROOMS,
     ROOMS_FETCHED,
-    FETCH_ROOMS_ERROR,
-    UPDATE_SELECTED_ROOM
+    ROOM_JOINED,
+    UPDATE_SELECTED_ROOM,
+    UPDATE_USER_NAME
 } from './Login.actions';
 
 const initial_state = {
-    userName: "",
-    availableRooms: [1, 7, 9],
-    selectedRoom: null
+    user: "",
+    rooms: [],
+    selectedRoom: null,
+    roomCreated: false
 }
 
 export default (state = initial_state, action) => {
 
     switch (action.type) {
-        case START_GAME:
-            return {
-                ...state,
-                roomNumber: action.payload.roomNumber,
-                show: false
-            };
-        case JOIN_ROOM:
-            return {
-                ...state
-            };
-        case ROOM_CREATED:
-            return {
-                ...state,
-                roomNumber: action.payload.roomNumber
-            };
-        case FETCHING_ROOMS:
-            return {
-                ...state,
-                fetching: true
-        };
-        case ROOMS_FETCHED:
-            return {
-                ...state,
-                totalRooms: action.payload.totalRoomCount,
-                availableRooms: action.payload.emptyRooms,
-                fetching: false
-        };
-        case FETCH_ROOMS_ERROR:
-            return {
-                ...state,
-                error: action.payload,
-                fetching: false
-        };
         case UPDATE_SELECTED_ROOM:
             return {
                 ...state,
                 selectedRoom: action.payload
+        };
+        case UPDATE_USER_NAME:
+            return {
+                ...state,
+                user: action.payload
+        };
+        case ROOMS_FETCHED:
+                return {
+                    ...state,
+                    rooms: action.payload.rooms,
+                    selectedRoom: state.selectedRoom || action.payload.selectedRoom
+        };
+        case ROOM_JOINED:
+            return {
+                ...state,
+                lastRoomJoiner: action.payload.new,
+                currentRoom: action.payload.room,
+                gamePlayers: action.payload.room.players,
+                roomJoined: true
+        };
+        case ROOM_CREATED:
+                return {
+                    ...state,
+                    roomNumber: action.payload.res.id,
+                    gamePlayers: action.payload.res.players,
+                    gameOwner: action.payload.gameOwner,
+                    roomCreated: true
         };
 
         default:
