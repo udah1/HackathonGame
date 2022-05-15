@@ -7,7 +7,6 @@ const initial_state = {
     show: true,
     gameGrid: []
 }
-
 export default (state = initial_state, action) => {
 
     switch (action.type) {
