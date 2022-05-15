@@ -11,7 +11,6 @@ class Socket {
             [1, 4, 7], [2, 5, 8], [3, 6, 9],
             [1, 5, 9], [7, 5, 3]
         ];
-
     }
 
     socketEvents() {
@@ -27,36 +26,27 @@ class Socket {
             /*
              * In this Event user will create a new Room and can ask someone to join.
              */
-            socket.on('create-game', (socketData) => {
-                Promise.all(['totalRoomCount', 'allRooms'].map(key => this.data[key])).then(values => {
-                    console.log(values);
-                    const allRooms = JSON.parse(values[1]);
-                    let totalRoomCount = values[0];
-                    let fullRooms = allRooms['fullRooms'];
-                    let emptyRooms = allRooms['emptyRooms'];
-                    /*Checking the if the room is empty.*/
-                    let isIncludes = emptyRooms.includes(totalRoomCount);
-                    if (!isIncludes) {
-                        totalRoomCount++;
-                        emptyRooms.push(totalRoomCount);
-                        socket.join("room-" + totalRoomCount);
-                        this.data.totalRoomCount = totalRoomCount;
-                        this.data.allRooms = JSON.stringify({
-                            emptyRooms: emptyRooms,
-                            fullRooms: fullRooms
-                        });
-                        IO.emit('rooms-available', {
-                            'totalRoomCount': totalRoomCount,
-                            'fullRooms': fullRooms,
-                            'emptyRooms': emptyRooms
-                        });
-                        IO.sockets.in("room-" + totalRoomCount).emit('new-room', {
-                            'totalRoomCount': totalRoomCount,
-                            'fullRooms': fullRooms,
-                            'emptyRooms': emptyRooms,
-                            'roomNumber': totalRoomCount
-                        });
+            socket.on('create-room', (socketData) => {
+
+                let id = 1;
+                let found = false;
+                while (!found) {
+                    found = Object.keys(this.data).every(key => key !== String(id));
+                    if (!found) {
+                        id += 1;
                     }
+                }
+                const {user} = socketData;
+
+                this.data.rooms[id] ={
+                    players: {},
+                    isFull: false
+                };
+                this.data.rooms[id].players[user] = {points: 0};
+
+                IO.emit('room-created', {id});
+                socket.broadcast.emit( {
+                    rooms: this.data.rooms
                 });
             });
 
@@ -64,37 +54,33 @@ class Socket {
              * In this event will user can join the selected room
              */
             socket.on('join-room', (socketData) => {
-                const roomNumber = socketData.roomNumber;
-                Promise.all(['totalRoomCount', 'allRooms'].map(key => this.data[key])).then(values => {
-                    const allRooms = JSON.parse(values[1]);
-                    let totalRoomCount = values[0];
-                    let fullRooms = allRooms['fullRooms'];
-                    let emptyRooms = allRooms['emptyRooms'];
-                    let indexPos = emptyRooms.indexOf(roomNumber);
-                    if (indexPos > -1) {
-                        emptyRooms.splice(indexPos, 1);
-                        fullRooms.push(roomNumber);
-                    }
-                    /* User Joining socket room */
-                    socket.join("room-" + roomNumber);
-                    this.data.allRooms = JSON.stringify({
-                        emptyRooms: emptyRooms,
-                        fullRooms: fullRooms
-                    });
-                    /* Getting the room number from socket */
-                    const currentRoom = (Object.keys(IO.sockets.adapter.sids[socket.id]).filter(item => item != socket.id)[0]).split('-')[1];
-                    IO.emit('rooms-available', {
-                        'totalRoomCount': totalRoomCount,
-                        'fullRooms': fullRooms,
-                        'emptyRooms': emptyRooms
-                    });
-                    IO.sockets.in("room-" + roomNumber).emit('start-game', {
-                        'totalRoomCount': totalRoomCount,
-                        'fullRooms': fullRooms,
-                        'emptyRooms': emptyRooms,
-                        'roomNumber': currentRoom
-                    });
+                const {roomNumber, user} = socketData;
+                const room = this.data.rooms[roomNumber];
+                if (room.isFull) {
+                    IO.emit('room-joined', 'FULL');
+                    return;
+                }
+
+                /* User Joining socket room */
+                socket.join("room-" + roomNumber);
+                this.data.allRooms = JSON.stringify({
+                    emptyRooms: emptyRooms,
+                    fullRooms: fullRooms
                 });
+                /* Getting the room number from socket */
+                const currentRoom = (Object.keys(IO.sockets.adapter.sids[socket.id]).filter(item => item !== socket.id)[0]).split('-')[1];
+                IO.emit('rooms-available', {
+                    'totalRoomCount': totalRoomCount,
+                    'fullRooms': fullRooms,
+                    'emptyRooms': emptyRooms
+                });
+                IO.sockets.in("room-" + roomNumber).emit('start-game', {
+                    'totalRoomCount': totalRoomCount,
+                    'fullRooms': fullRooms,
+                    'emptyRooms': emptyRooms,
+                    'roomNumber': currentRoom
+                });
+
             });
 
             /*
@@ -103,43 +89,32 @@ class Socket {
              */
             socket.on('send-move', (socketData) => {
                 const playedGameGrid = socketData.gameGrid;
-                const roomNumber = socketData.roomNumber;
-                let winner = null;
-                /* checking the winner */
-                this.winCombination.forEach(singleCombination => {
-                    if (playedGameGrid[singleCombination[0]] &&
-                        playedGameGrid[singleCombination[0]] === playedGameGrid[singleCombination[1]] &&
-                        playedGameGrid[singleCombination[0]] === playedGameGrid[singleCombination[2]]) {
-                        winner = playedGameGrid[singleCombination[0]] + ' Wins !';
-                    }
-                    return false;
-                });
-                if (winner === null) {
-                    let movesPlayed = 0;
-                    playedGameGrid.forEach((cell) => {
-                        if (cell) {
-                            movesPlayed++;
-                        }
-                    })
-                    if (movesPlayed === 9) {
-                        winner = 'Game Draw';
-                    }
+                const {user, roomNumber, playedClause} = socketData;
+                const room = this.data.rooms[roomNumber];
+                const {generatedClause} = room;
+                let winner;
+
+                if (generatedClause.toLowerCase().indexOf(playedClause.toLowerCase()) >= 0) {
+                    winner = user;
+                    room.players[user].points += room.gamePoints;
                 }
 
-                if (winner === null) {
+                if (!winner) {
                     socket.broadcast.to("room-" + roomNumber).emit('receive-move', {
-                        'position': socketData.position,
-                        'playedText': socketData.playedText,
+                        'playedClause': socketData.playedClause,
                         'winner': null
                     });
                 } else {
                     IO.sockets.in("room-" + roomNumber).emit('receive-move', {
-                        'position': socketData.position,
-                        'playedText': socketData.playedText,
+                        'playedClause': generatedClause,
                         'winner': winner
                     });
                 }
+
+
             });
+
+
 
             /*
              * Here we will remove the room number from fullrooms array
@@ -150,7 +125,8 @@ class Socket {
                 const roomNumber = ( rooms[1] !== undefined && rooms[1] !== null) ? (rooms[1]).split('-')[1] : null;
                 if (rooms !== null) {
                     Promise.all(['totalRoomCount', 'allRooms'].map(key => this.data[key])).then(values => {
-                        const allRooms = JSON.parse(values[1]);
+                        console.log(values);
+                        const allRooms = values[1];
                         let totalRoomCount = values[0];
                         let fullRooms = allRooms['fullRooms'];
                         let emptyRooms = allRooms['emptyRooms'];
