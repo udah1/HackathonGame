@@ -5,12 +5,19 @@ export const ROOM_INFO = 'ROOM_INFO';
 export const CATEGORIES_FETCHED = 'CATEGORIES_FETCHED';
 export const CATEGORIES_ERROR = 'CATEGORIES_ERROR';
 export const UPDATE_SELECTED_CATEGORY = 'UPDATE_SELECTED_CATEGORY';
+export const INIT_BORAD = 'INIT_BORAD';
 
 export const room_joined = (socket) => {
     return dispatch => {
         socket.on('room-joined', (res) => {
             dispatch({
                  type: ROOM_JOINED,
+                 payload: res
+             });
+        });
+        socket.on('init-board', (res) => {
+            dispatch({
+                 type: INIT_BORAD,
                  payload: res
              });
         });
