@@ -6,6 +6,7 @@ export const CATEGORIES_FETCHED = 'CATEGORIES_FETCHED';
 export const CATEGORIES_ERROR = 'CATEGORIES_ERROR';
 export const UPDATE_SELECTED_CATEGORY = 'UPDATE_SELECTED_CATEGORY';
 export const INIT_BORAD = 'INIT_BORAD';
+export const RESET_GAME = 'RESET_GAME';
 
 export const room_joined = (socket) => {
     return dispatch => {
@@ -60,7 +61,7 @@ export const update_selected_category = (e) => {
         });
     }
 };
-export const resetGame = (e) => {
+export const resetBoard = (e) => {
     return dispatch => {
         dispatch({
             type: BoardActions.RESET_BORAD
@@ -76,6 +77,14 @@ export const getRoomInfo = (socket, roomNumber) => {
                 type: ROOM_INFO,
                 payload: res
             });
+        });
+    }
+};
+
+export const resetGame = () => {
+    return dispatch => {
+        dispatch({
+            type: RESET_GAME
         });
     }
 };

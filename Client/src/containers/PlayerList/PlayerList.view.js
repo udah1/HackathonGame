@@ -2,7 +2,7 @@ import React, {Component} from 'react';
 import {connect}    from 'react-redux';
 import {Form, Button, Table} from 'react-bootstrap';
 import { withRouter } from "react-router-dom";
-import {room_joined, start_game, get_categories, update_selected_category, resetGame} from './PlayerList.actions';
+import {room_joined, start_game, get_categories, update_selected_category, resetBoard} from './PlayerList.actions';
 
 
 class PlayerList extends Component {
@@ -37,8 +37,8 @@ class PlayerList extends Component {
     };
 
     handleStartGame = () => {
-        const {selectedRoom, roomNumber, socket, startGame, categories, history, gameOwner, selectedCategory, resetGame} = this.props;
-        resetGame();
+        const {selectedRoom, roomNumber, socket, startGame, categories, history, gameOwner, selectedCategory, resetBoard} = this.props;
+        resetBoard();
         const room = gameOwner ? roomNumber : selectedRoom;
         startGame(socket, room, selectedCategory || categories[0]);
         history.push('/board');
@@ -82,7 +82,7 @@ function mapDispatchToProps(dispatch) {
         subscribeEvents: (socket) => dispatch(room_joined(socket)),
         getCategories: () => dispatch(get_categories()),
         updateSelectedCategory: (e) => dispatch(update_selected_category(e)),
-        resetGame: () => dispatch(resetGame()),
+        resetBoard: () => dispatch(resetBoard()),
         startGame: (socket, selectedRoom, category) => start_game(socket, selectedRoom, category)
     }
 }
