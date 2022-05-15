@@ -1,4 +1,3 @@
-export const START_GAME = 'START_GAME';
 export const UPDATE_SELECTED_ROOM = 'UPDATE_SELECTED_ROOM';
 export const UPDATE_USER_NAME = 'UPDATE_USER_NAME';
 export const ROOMS_FETCHED = 'ROOMS_FETCHED';
@@ -31,13 +30,24 @@ export const join_room = (socket, roomNumber, user) => {
     }
 };
 
+export const room_joined = (socket) => {
+    return dispatch => {
+        socket.on('room-joined', (res) => {
+            dispatch({
+                 type: ROOM_JOINED,
+                 payload: res
+             });
+        });
+    }
+};
+
 export const create_new_room = (socket, user) => {
     socket.emit('create-room', {user});
     return dispatch => {
         socket.on('room-created', (res) => {
             dispatch({
                 type: ROOM_CREATED,
-                payload: res
+                payload: {res, gameOwner: user}
             });
         });
     }

@@ -1,12 +1,10 @@
 export const INIT_BORAD = 'INIT_BORAD';
 export const RECIEVE_LETTER = 'RECIEVE_LETTER';
 
-// export const ROOM_DISCONNECTED = 'ROOM_DISCONNECTED';
-// export const PLAY_MOVE = 'PLAY_MOVE';
-
 export const subscribe_events = (socket) => {
+    console.log('init');
     return dispatch => {
-        socket.on('initBoard', (res) => {
+        socket.on('init-board', (res) => {
             dispatch({
                 type: INIT_BORAD,
                 payload: res
@@ -21,24 +19,13 @@ export const subscribe_events = (socket) => {
         });
     }
 };
-//
-// export const play_move = (socket, number, props) => {
-//     return dispatch => {
-//         if (!props.myTurn) {
-//             return;
-//         }
-//         const gameGrid = props.gameGrid.slice();
-//         gameGrid[number] = props.sign;
-//         dispatch({
-//             type: PLAY_MOVE,
-//             gameGrid,
-//             sign: props.sign
-//         });
-//         socket.emit('send-move', {
-//             'roomNumber' : props.roomNumber,
-//             'playedText': props.sign,
-//             'position' : number,
-//             "gameGrid": gameGrid
-//         });
-//     };
-// };
+
+export const play_guess = (socket, number, sentence, user) => {
+    return dispatch => {
+        socket.emit('player-guess', {
+            'roomNumber' : number,
+            'guess': sentence,
+            "user": user
+        });
+    };
+};

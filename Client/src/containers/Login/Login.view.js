@@ -14,7 +14,7 @@ class Login extends Component {
     componentDidUpdate(prevProps, prevState, snapshot) {
         const {roomJoined, roomCreated, history} = this.props;
         if(roomJoined || roomCreated) {
-            history.push('/board');
+            history.push('/players');
         }
     }
 
@@ -73,6 +73,7 @@ function mapDispatchToProps(dispatch, ownProps) {
 
 function mapStateToProps(state) {
     return {
+        ...state.reducer.login,
         ...state.reducer.login
     }
 }

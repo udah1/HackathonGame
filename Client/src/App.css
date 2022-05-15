@@ -114,3 +114,7 @@
 .scoreBoard tbody tr:nth-child(odd) td{
   background-color: #61dafb;
 }
+
+.guessedSection p {
+  font-size: 80px;
+}
