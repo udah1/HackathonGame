@@ -10,23 +10,26 @@ class Login extends Component {
 
     constructor(props) {
         super(props)
-        // this.socket = io('localhost:4000', { wsEngine: 'uws' });
+        this.socket = io.connect('localhost:4000', { wsEngine: 'uws' });
+        this.state = {
+            userName: ""
+        }
         //props.subscribeEvents(this.socket);
     }
 
     render() {
-        const {roomNumber, joinRoom, createRoom, show, myTurn, sign} = this.props;
+        const {roomNumber, joinRoom, createRoom, show} = this.props;
 
         return (
-            <div>
+            <div className="">
                 <Form>
-                    <Form.Label>Wheel of Fortune</Form.Label>
+                    <Form.Label className="App-header">Wheel of Fortune</Form.Label>
                     <Form.Group className="mb-3">
-                        <Form.Label>User</Form.Label>
-                        <Form.Control type="text" placeholder="Enter user name" />
+                        <Form.Label className="">User</Form.Label>
+                        <Form.Control type="text" placeholder="Enter user name" value={this.state.userName} />
                     </Form.Group>
-                    <Button variant="primary" onClick={null}>Start new game</Button>
-                    <Button variant="primary" onClick={null}>Join</Button>
+                    <Button variant="primary" onClick={createRoom}>Start new game</Button>
+                    <Button variant="primary" onClick={joinRoom}>Join</Button>
                 </Form>
             </div>
         );
@@ -38,7 +41,7 @@ function mapDispatchToProps(dispatch, ownProps) {
     return {
         subscribeEvents: (socket) => dispatch(subscribe_events(socket)),
         joinRoom: (socket, id) => dispatch(join_room(socket, id)),
-        createRoom: (socket) => dispatch(create_new_room(socket))
+        createRoom: (socket) => dispatch(create_new_room(socket, this.state.userName))
     }
 }
 
