@@ -23,7 +23,7 @@ class Board extends Component {
     if((prevProps.gameStatus && !prevProps.gameStatus.winner && !!this.props.gameStatus.winner)
       ||  this.props.gameStatus.status === "GAME_OVER"
     ){
-      this.props.getRoomInfo(this.props.socket, roomNumber);
+      this.props.getRoomInfo(this.props.socket, this.props.roomNumber);
       this.props.resetGame();
       setTimeout(() => this.props.history.push('/players'), 5000);
     }
