@@ -12,7 +12,7 @@ class Board extends Component {
     super(props);
     this.socket = props.socket;
     this.sentenceToSubmit = null;
-    //props.subscribeEvents(this.socket, props);
+    props.subscribeEvents(this.socket, props);
   }
 
   componentDidMount() {
@@ -25,7 +25,7 @@ class Board extends Component {
     let index = 0;
     return myArray.map((item, indexj) => {
       return (
-        <>
+        <span key={indexj}>
           <div className="row sentenceRow" key={indexj}>
             {
               item.split('').map(letter => {
@@ -50,14 +50,13 @@ class Board extends Component {
           </div>
           <div className="row sentenceRowDivider">
           </div>
-        </>
-
+        </span>
       );
     });
   };
 
   submitGuess = (transcript, interimTranscript) => {
-    const {playGuess} = this.props;
+    const {playGuess, user, socket, selectedRoom, gameOwner, roomNumber} = this.props;
     let value = '';
     if(!interimTranscript.length) {
       return;
@@ -70,7 +69,11 @@ class Board extends Component {
       else {
         value = interimTranscript;
       }
+      value = value.trim();
       this.sentenceToSubmit = value.trim();
+    }
+    if(!!value.length) {
+      playGuess(socket, gameOwner ? roomNumber : selectedRoom, value, user);
     }
   };
 
@@ -103,7 +106,9 @@ function mapDispatchToProps(dispatch) {
 
 function mapStateToProps(state) {
   return {
-    ...state.reducer.board
+    ...state.reducer.board,
+    ...state.reducer.login
+
   }
 }
 
