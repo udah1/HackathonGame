@@ -8,7 +8,7 @@ import {
 } from './Login.actions';
 
 const initial_state = {
-    userName: "",
+    user: "",
     rooms: [],
     selectedRoom: null,
     roomCreated: false
@@ -25,22 +25,25 @@ export default (state = initial_state, action) => {
         case UPDATE_USER_NAME:
             return {
                 ...state,
-                userName: action.payload
+                user: action.payload
         };
         case ROOMS_FETCHED:
                 return {
                     ...state,
-                    rooms: action.payload
+                    rooms: action.payload.rooms,
+                    selectedRoom: state.selectedRoom || action.payload.selectedRoom
         };
         case ROOM_JOINED:
             return {
                 ...state,
-                lastRoomJoiner: action.payload.newUser
+                lastRoomJoiner: action.payload.new,
+                currentRoom: action.payload.room,
+                roomJoined: true
         };
         case ROOM_CREATED:
                 return {
                     ...state,
-                    roomNumber: action.payload.roomNumber,
+                    roomNumber: action.payload.id,
                 roomCreated: true
         };
         case START_GAME:
