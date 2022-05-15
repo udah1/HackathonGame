@@ -2,69 +2,8 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="c4a78674-536a-4dd0-90b9-14d443a51e28" name="Default Changelist" comment="">
-      <change beforePath="$PROJECT_DIR$/.git1/COMMIT_EDITMSG" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.git1/HEAD" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.git1/config" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.git1/description" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.git1/hooks/applypatch-msg.sample" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.git1/hooks/commit-msg.sample" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.git1/hooks/fsmonitor-watchman.sample" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.git1/hooks/post-update.sample" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.git1/hooks/pre-applypatch.sample" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.git1/hooks/pre-commit.sample" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.git1/hooks/pre-merge-commit.sample" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.git1/hooks/pre-push.sample" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.git1/hooks/pre-rebase.sample" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.git1/hooks/pre-receive.sample" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.git1/hooks/prepare-commit-msg.sample" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.git1/hooks/update.sample" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.git1/index" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.git1/info/exclude" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.git1/logs/HEAD" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.git1/logs/refs/heads/master" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.git1/objects/08/0d6c77ac21bb2ef88a6992b2b73ad93daaca92" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.git1/objects/1f/03afeece5ac28064fa3c73a29215037465f789" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.git1/objects/37/845757234ccb68531c10cf7a2ffc589c47e342" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.git1/objects/4b/825dc642cb6eb9a060e54bf8d69288fbee4904" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.git1/objects/4d/29575de80483b005c29bfcac5061cd2f45313e" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.git1/objects/52/53d3ad9e6be6690549cb255f5952337b02401d" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.git1/objects/58/beeaccd87e230076cab531b8f418f40b6d1aeb" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.git1/objects/60/9bb5369716108e8c5355cf0a8ddc87a4caf362" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.git1/objects/63/10bb83d3602d23ff4194d68fed1d75a05ad920" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.git1/objects/74/b5e053450a48a6bdb4d71aad648e7af821975c" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.git1/objects/7b/1e172334cdc980bee9ad6a8a87cf21e0ed18d8" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.git1/objects/8e/29b36dea7f04ae8729d8b33ecc05c3c9b0fe46" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.git1/objects/8f/2609b7b3e0e3897ab3bcaad13caf6876e48699" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.git1/objects/9d/fc1c058cebbef8b891c5062be6f31033d7d186" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.git1/objects/a1/1777cc471a4344702741ab1c8a588998b1311a" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.git1/objects/a4/e47a6545bc15971f8f63fba70e4013df88a664" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.git1/objects/aa/069f27cbd9d53394428171c3989fd03db73c76" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.git1/objects/b3/f18e3a2d56152e9d97893894e49d31363dcf2a" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.git1/objects/cc/e39907decfe65cd7942b815c3d49466465b520" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.git1/objects/d5/63c0fb10ba0e42724b21286eb546ee4e5734fc" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.git1/objects/e9/e57dc4d41b9b46e05112e9f45b7ea6ac0ba15e" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.git1/objects/ec/2585e8c0bb8188184ed1e0703c4c8f2a8419b0" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.git1/objects/fc/44b0a3796c0e0a64c3d858ca038bd4570465d9" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.git1/refs/heads/master" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.gitignore" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/README.md" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/package-lock.json" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/package.json" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/favicon.ico" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/index.html" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/logo192.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/logo512.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/manifest.json" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/robots.txt" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/App.css" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/App.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/App.test.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/index.css" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/index.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/logo.svg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/reportWebVitals.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/setupTests.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Client/.gitignore" beforeDir="false" />
     </list>
     <ignored path="$PROJECT_DIR$/.tmp/" />
     <ignored path="$PROJECT_DIR$/temp/" />
@@ -109,6 +48,11 @@
               <item name="game" type="b2602c69:ProjectViewProjectNode" />
               <item name="game" type="462c0819:PsiDirectoryNode" />
             </path>
+            <path>
+              <item name="game" type="b2602c69:ProjectViewProjectNode" />
+              <item name="game" type="462c0819:PsiDirectoryNode" />
+              <item name="Server" type="462c0819:PsiDirectoryNode" />
+            </path>
           </expand>
           <select />
         </subPane>
@@ -119,6 +63,9 @@
     <property name="SHARE_PROJECT_CONFIGURATION_FILES" value="true" />
     <property name="WebServerToolWindowFactoryState" value="false" />
     <property name="last_opened_file_path" value="$PROJECT_DIR$" />
+    <property name="node.js.detected.package.eslint" value="true" />
+    <property name="node.js.path.for.package.eslint" value="project" />
+    <property name="node.js.selected.package.eslint" value="(autodetect)" />
     <property name="nodejs_interpreter_path.stuck_in_default_project" value="undefined stuck path" />
     <property name="nodejs_npm_path_reset_for_default_project" value="true" />
     <property name="nodejs_package_manager_path" value="npm" />
@@ -146,7 +93,7 @@
       <option name="presentableId" value="Default" />
       <updated>1652601610288</updated>
       <workItem from="1652601611922" duration="3426000" />
-      <workItem from="1652605344739" duration="242000" />
+      <workItem from="1652605344739" duration="482000" />
     </task>
     <task id="LOCAL-00001" summary="package json">
       <created>1652602155706</created>
@@ -162,11 +109,25 @@
       <option name="project" value="LOCAL" />
       <updated>1652602674049</updated>
     </task>
-    <option name="localTasksCounter" value="3" />
+    <task id="LOCAL-00003" summary="seperate folders">
+      <created>1652605593095</created>
+      <option name="number" value="00003" />
+      <option name="presentableId" value="LOCAL-00003" />
+      <option name="project" value="LOCAL" />
+      <updated>1652605593095</updated>
+    </task>
+    <task id="LOCAL-00004" summary="separate folders">
+      <created>1652605739157</created>
+      <option name="number" value="00004" />
+      <option name="presentableId" value="LOCAL-00004" />
+      <option name="project" value="LOCAL" />
+      <updated>1652605739157</updated>
+    </task>
+    <option name="localTasksCounter" value="5" />
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="3668000" />
+    <option name="totallyTimeSpent" value="3908000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="-8" y="-8" width="1936" height="1015" extended-state="6" />
@@ -181,7 +142,7 @@
       <window_info anchor="bottom" id="Debug" order="3" />
       <window_info anchor="bottom" id="Run" order="4" weight="0.34807256" />
       <window_info anchor="bottom" id="Docker" order="5" show_stripe_button="false" />
-      <window_info active="true" anchor="bottom" id="Version Control" order="6" visible="true" weight="0.6984127" />
+      <window_info active="true" anchor="bottom" id="Version Control" order="6" visible="true" weight="0.43537414" />
     </layout>
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -191,7 +152,8 @@
     <MESSAGE value="package json" />
     <MESSAGE value="gitignore" />
     <MESSAGE value="seperate folders" />
-    <option name="LAST_COMMIT_MESSAGE" value="seperate folders" />
+    <MESSAGE value="separate folders" />
+    <option name="LAST_COMMIT_MESSAGE" value="separate folders" />
   </component>
   <component name="editorHistoryManager">
     <entry file="file://$PROJECT_DIR$/package.json" />
