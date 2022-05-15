@@ -1,5 +1,6 @@
 import {
-    START_GAME
+    START_GAME,
+    CATEGORIES_FETCHED
 } from './PlayerList.actions';
 
 const initial_state = {
@@ -13,6 +14,12 @@ export default (state = initial_state, action) => {
                 ...state,
                 roomNumber: action.payload.roomNumber,
             show: false
+        };
+        case CATEGORIES_FETCHED:
+                return {
+                    ...state,
+                    categories: action.payload,
+                show: false
         };
 
         default:

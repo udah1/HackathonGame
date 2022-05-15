@@ -73,6 +73,7 @@ function mapDispatchToProps(dispatch, ownProps) {
 
 function mapStateToProps(state) {
     return {
+        ...state.reducer.login,
         ...state.reducer.login
     }
 }
