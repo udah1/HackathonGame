@@ -1,12 +1,10 @@
 export const INIT_BORAD = 'INIT_BORAD';
 export const RECIEVE_LETTER = 'RECIEVE_LETTER';
 
-// export const ROOM_DISCONNECTED = 'ROOM_DISCONNECTED';
-// export const PLAY_MOVE = 'PLAY_MOVE';
-
 export const subscribe_events = (socket) => {
+    console.log('init');
     return dispatch => {
-        socket.on('initBoard', (res) => {
+        socket.on('init-board', (res) => {
             dispatch({
                 type: INIT_BORAD,
                 payload: res
@@ -16,10 +14,7 @@ export const subscribe_events = (socket) => {
         socket.on('reveal-letter', (res) => {
             dispatch({
                 type: RECIEVE_LETTER,
-                payload: {
-                    score: 50,
-                    letters: [ {ind: 5, val: 'p'}, {ind: 1, val: 'A'} ]
-                }
+                payload: res
             });
         });
     }
