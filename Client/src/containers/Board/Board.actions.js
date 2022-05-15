@@ -16,29 +16,21 @@ export const subscribe_events = (socket) => {
         socket.on('reveal-letter', (res) => {
             dispatch({
                 type: RECIEVE_LETTER,
-                payload: res
+                payload: {
+                    score: 50,
+                    letters: [ {ind: 5, val: 'p'}, {ind: 1, val: 'A'} ]
+                }
             });
         });
     }
 };
-//
-// export const play_move = (socket, number, props) => {
-//     return dispatch => {
-//         if (!props.myTurn) {
-//             return;
-//         }
-//         const gameGrid = props.gameGrid.slice();
-//         gameGrid[number] = props.sign;
-//         dispatch({
-//             type: PLAY_MOVE,
-//             gameGrid,
-//             sign: props.sign
-//         });
-//         socket.emit('send-move', {
-//             'roomNumber' : props.roomNumber,
-//             'playedText': props.sign,
-//             'position' : number,
-//             "gameGrid": gameGrid
-//         });
-//     };
-// };
+
+export const play_guess = (socket, number, sentence, user) => {
+    return dispatch => {
+        socket.emit('player-guess', {
+            'roomNumber' : number,
+            'guess': sentence,
+            "user": user
+        });
+    };
+};
