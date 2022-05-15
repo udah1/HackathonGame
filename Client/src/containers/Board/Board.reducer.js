@@ -3,7 +3,8 @@ import {
     RECIEVE_LETTER,
     RECEIVE_GUESS,
     ALL_REVEALED,
-    GAME_OVER
+    GAME_OVER,
+    RESET_BORAD
 } from './Board.actions';
 
 const initial_state = {
@@ -20,6 +21,10 @@ const initial_state = {
 export default (state = initial_state, action) => {
 
     switch (action.type) {
+        case RESET_BORAD:
+            return {
+                ...initial_state
+            };
         case INIT_BORAD:
             return {
                 ...state,

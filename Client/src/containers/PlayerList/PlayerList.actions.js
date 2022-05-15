@@ -1,3 +1,4 @@
+import * as BoardActions from '../Board/Board.actions';
 export const START_GAME = 'START_GAME';
 export const ROOM_JOINED = 'ROOM_JOINED';
 export const CATEGORIES_FETCHED = 'CATEGORIES_FETCHED';
@@ -48,6 +49,13 @@ export const update_selected_category = (e) => {
         dispatch({
             type: UPDATE_SELECTED_CATEGORY,
             payload: e.target.value
+        });
+    }
+};
+export const resetGame = (e) => {
+    return dispatch => {
+        dispatch({
+            type: BoardActions.RESET_BORAD
         });
     }
 };
