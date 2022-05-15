@@ -26,9 +26,6 @@ const Dictaphone = (props) => {
       {/*<button onClick={SpeechRecognition.startListening}>Start</button>*/}
       {/*<button onClick={SpeechRecognition.stopListening}>Stop</button>*/}
       {/*<button onClick={resetTranscript}>Reset</button>*/}
-      <p>-{transcript}</p>
-      <p>+{interimTranscript}</p>
-      <p>/{finalTranscript}</p>
     </div>
   );
 };

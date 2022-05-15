@@ -1,8 +1,9 @@
 export const INIT_BORAD = 'INIT_BORAD';
 export const RECIEVE_LETTER = 'RECIEVE_LETTER';
+export const RECEIVE_GUESS = 'RECEIVE_GUESS';
+export const ALL_REVEALED = 'ALL_REVEALED';
 
 export const subscribe_events = (socket) => {
-    console.log('init');
     return dispatch => {
         socket.on('init-board', (res) => {
             dispatch({
@@ -14,6 +15,19 @@ export const subscribe_events = (socket) => {
         socket.on('reveal-letter', (res) => {
             dispatch({
                 type: RECIEVE_LETTER,
+                payload: res
+            });
+        });
+
+        socket.on('receive-guess', (res) => {
+            dispatch({
+                type: RECEIVE_GUESS,
+                payload: res
+            });
+        });
+        socket.on('all-revealed', (res) => {
+            dispatch({
+                type: ALL_REVEALED,
                 payload: res
             });
         });

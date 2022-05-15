@@ -1,12 +1,20 @@
 import {
     INIT_BORAD,
-    RECIEVE_LETTER
+    RECIEVE_LETTER,
+    RECEIVE_GUESS,
+    ALL_REVEALED
 } from './Board.actions';
 
 const initial_state = {
     sentence: "",
     lastLetterIndexUpdated: [],
-    scoreForGame: 200
+    scoreForGame: 200,
+    gameStatus: {
+        user: null,
+        winner: null,
+        guess: null,
+        status: 'NA'
+    }
 }
 export default (state = initial_state, action) => {
 
@@ -18,6 +26,24 @@ export default (state = initial_state, action) => {
                 guessedLetters: [],
                 lastLetterIndexUpdated: [],
                 scoreForGame: action.payload.score
+            };
+        case RECEIVE_GUESS:
+            console.log('receive guess ' + JSON.stringify(action.payload))
+            return {
+                ...state,
+                gameStatus: {
+                    ...action.payload,
+                    status: "GUESSED"
+                }
+            };
+        case ALL_REVEALED:
+            console.log('receive data ' + JSON.stringify(action.payload))
+            return {
+                ...state,
+                gameStatus: {
+                    ...action.payload,
+                    status: "GAME_OVER"
+                }
             };
         case RECIEVE_LETTER:
             let {sentence} = state;

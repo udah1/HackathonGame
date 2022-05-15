@@ -18,6 +18,13 @@ class Board extends Component {
   componentDidMount() {
     SpeechRecognition.startListening({ continuous: true, language: 'he-IL' });
   }
+  componentDidUpdate(prevProps, prevState, snapshot) {
+    if((prevProps.gameStatus && !prevProps.gameStatus.guess && !!this.props.gameStatus.guess)
+      ||  this.props.gameStatus.status === "GAME_OVER"
+    ){
+      setTimeout(() => this.props.history.push('/players'), 5000);
+    }
+  }
 
   renderSentence = () => {
     const {sentence, lastLetterIndexUpdated} = this.props;
@@ -78,7 +85,7 @@ class Board extends Component {
   };
 
   render() {
-    const {sentence, scoreForGame} = this.props;
+    const {sentence, scoreForGame, gameStatus} = this.props;
     if (!sentence) return (<></>);
     return (
       <div className="container containerBoard">
@@ -89,6 +96,14 @@ class Board extends Component {
         <div className="row sentence">
           {this.renderSentence()}
         </div>
+        {gameStatus && gameStatus.status === "GAME_OVER" && <div className="row">No one guessed</div>
+        }
+        {gameStatus && gameStatus.guess &&
+          <div className="row">
+            {gameStatus.winner && <div>Winner is {gameStatus.winner}</div>}
+            <div>Sentence `{gameStatus.guess}` was guessed by {gameStatus.user}</div>
+          </div>
+        }
         <Dictaphone submitGuess={(transcript, interimTranscript) => this.submitGuess(transcript, interimTranscript)}/>
       </div>
 
