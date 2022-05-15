@@ -2,6 +2,7 @@ import React, {Component} from 'react';
 import {connect} from 'react-redux';
 import Card from 'react-bootstrap/Card';
 import {subscribe_events} from './Board.actions'
+import { withRouter } from "react-router-dom";
 
 class Board extends Component {
 
@@ -81,4 +82,4 @@ function mapStateToProps(state) {
   }
 }
 
-export default connect(mapStateToProps, mapDispatchToProps)(Board)
+export default connect(mapStateToProps, mapDispatchToProps)(withRouter(Board))

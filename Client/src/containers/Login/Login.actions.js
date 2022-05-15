@@ -9,16 +9,18 @@ export const subscribe_events = (socket) => {
     socket.emit('room-list');
     return dispatch => {
         socket.on('rooms', (res) => {
+            const allRooms = (res.rooms !== null && res.rooms !== undefined) ? Object.keys(res.rooms) : null;
+            const selectedRoom = allRooms && allRooms.length > 0 ? allRooms[0] : null;
             dispatch({
                 type: ROOMS_FETCHED,
-                payload: res
+                payload: {rooms: res.rooms, selectedRoom}
             });
         });
     }
 };
 
-export const join_room = (socket, roomNumber, userName) => {
-    socket.emit('join-room', {roomNumber, userName});
+export const join_room = (socket, roomNumber, user) => {
+    socket.emit('join-room', {roomNumber, user});
     return dispatch => {
         socket.on('room-joined', (res) => {
             dispatch({
@@ -29,8 +31,8 @@ export const join_room = (socket, roomNumber, userName) => {
     }
 };
 
-export const create_new_room = (socket, roomNumber, userName) => {
-    socket.emit('create-room', {roomNumber, userName});
+export const create_new_room = (socket, user) => {
+    socket.emit('create-room', {user});
     return dispatch => {
         socket.on('room-created', (res) => {
             dispatch({

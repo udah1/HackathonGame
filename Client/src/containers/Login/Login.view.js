@@ -2,7 +2,7 @@ import React, {Component} from 'react';
 import {subscribe_events, join_room, create_new_room, update_selected_room, update_user_name} from './Login.actions';
 import {connect} from 'react-redux';
 import {Form, Button} from'react-bootstrap';
-import { useHistory } from "react-router";
+import { withRouter } from "react-router-dom";
 
 class Login extends Component {
 
@@ -12,18 +12,25 @@ class Login extends Component {
     }
 
     handleCreateRoom = () => {
-        const {createRoom, socket, selectedRoom, userName} = this.props;
-        createRoom(socket, selectedRoom, userName);
+        const {createRoom, socket, user, history} = this.props;
+        if(user) {
+            createRoom(socket, user);
+            history.push('/board');
+        }
     }
 
     handleJoinRoom = () => {
-        const {joinRoom, socket, selectedRoom, userName} = this.props;
-        joinRoom(socket, selectedRoom, userName);
+        const {joinRoom, socket, selectedRoom, user, history} = this.props;
+        if(selectedRoom && user) {
+            joinRoom(socket, selectedRoom, user);
+            history.push('/board');
+        }
     }
 
     render() {
-        const {userName, rooms, selectedRoom, updateSelectedRoom, updateUserName} = this.props;
-        const availableRooms = rooms.map((room, roomKey) => (<option key={roomKey} value={roomKey}>{roomKey}</option>));
+        const {user, rooms, selectedRoom, updateSelectedRoom, updateUserName} = this.props;
+
+        const availableRooms = Object.keys(rooms).map((room, index) => (<option key={room} value={room}>{room}</option>));
 
         return (
             <div className="">
@@ -31,16 +38,18 @@ class Login extends Component {
                     <Form.Label className="App-header">Wheel of Fortune</Form.Label>
                     <Form.Group className="mb-3">
                         <Form.Label className="">User</Form.Label>
-                        <Form.Control type="text" placeholder="Enter user name" defaultValue={userName} onChange={updateUserName} />
+                        <Form.Control type="text" placeholder="Enter user name" value={user} onChange={updateUserName} />
                     </Form.Group>
                     <Form.Group className="mb-3">
                         <Form.Label className="">Available Rooms</Form.Label>
-                        <Form.Control as="select" defaultValue={selectedRoom} onChange={updateSelectedRoom}>
+                        <Form.Control as="select" defaultValue={selectedRoom || ""} onChange={updateSelectedRoom}>
                             {availableRooms}
                         </Form.Control>
                     </Form.Group>
-                    <Button variant="primary" onClick={this.handleCreateRoom}>Start new game</Button>
-                    <Button variant="primary" onClick={this.handleJoinRoom}>Join</Button>
+                    <div>
+                        <Button variant="primary" onClick={this.handleCreateRoom}>Start new game</Button>
+                        <Button variant="primary" onClick={this.handleJoinRoom}>Join</Button>
+                    </div>
                 </Form>
             </div>
         );
@@ -50,8 +59,8 @@ class Login extends Component {
 function mapDispatchToProps(dispatch, ownProps) {
     return {
         subscribeEvents: (socket) => dispatch(subscribe_events(socket)),
-        joinRoom: (socket, selectedRoom, userName) => dispatch(join_room(socket, selectedRoom, userName)),
-        createRoom: (socket, selectedRoom, userName) => dispatch(create_new_room(socket, selectedRoom, userName)),
+        joinRoom: (socket, selectedRoom, user) => dispatch(join_room(socket, selectedRoom, user)),
+        createRoom: (socket, user) => dispatch(create_new_room(socket, user)),
         updateSelectedRoom: (e) => dispatch(update_selected_room(e)),
         updateUserName: (e) => dispatch(update_user_name(e))
     }
@@ -64,4 +73,4 @@ function mapStateToProps(state) {
 }
 
 
-export default connect(mapStateToProps, mapDispatchToProps)(Login);
+export default connect(mapStateToProps, mapDispatchToProps)(withRouter(Login));
