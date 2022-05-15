@@ -23,7 +23,7 @@ class Board extends Component {
     if((prevProps.gameStatus && !prevProps.gameStatus.winner && !!this.props.gameStatus.winner)
       ||  this.props.gameStatus.status === "GAME_OVER"
     ){
-      this.props.getRoomInfo(this.props.socket);
+      this.props.getRoomInfo(this.props.socket, roomNumber);
       this.props.resetGame();
       setTimeout(() => this.props.history.push('/players'), 5000);
     }
@@ -125,7 +125,7 @@ function mapDispatchToProps(dispatch) {
   return {
     subscribeEvents: (socket, props) => dispatch(subscribe_events(socket, props.sign)),
     playGuess: (socket, number, sentence, user) => dispatch(play_guess(socket, number, sentence, user)),
-    getRoomInfo: (socket) => dispatch(get_room_info(socket)),
+    getRoomInfo: (socket, roomNumber) => dispatch(get_room_info(socket, roomNumber)),
     resetGame: () => dispatch(reset_game())
 
   }
