@@ -2,7 +2,8 @@ import {
     INIT_BORAD,
     RECIEVE_LETTER,
     RECEIVE_GUESS,
-    ALL_REVEALED
+    ALL_REVEALED,
+    GAME_OVER
 } from './Board.actions';
 
 const initial_state = {
@@ -42,7 +43,7 @@ export default (state = initial_state, action) => {
                 ...state,
                 gameStatus: {
                     ...action.payload,
-                    status: "GAME_OVER"
+                    status: GAME_OVER
                 }
             };
         case RECIEVE_LETTER:

@@ -2,6 +2,8 @@ export const INIT_BORAD = 'INIT_BORAD';
 export const RECIEVE_LETTER = 'RECIEVE_LETTER';
 export const RECEIVE_GUESS = 'RECEIVE_GUESS';
 export const ALL_REVEALED = 'ALL_REVEALED';
+export const GAME_OVER = 'GAME_OVER';
+export const GUESSED = "GUESSED";
 
 export const subscribe_events = (socket) => {
     return dispatch => {

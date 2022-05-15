@@ -98,7 +98,7 @@ class Board extends Component {
         </div>
         {gameStatus && gameStatus.status === "GAME_OVER" && <div className="row">No one guessed</div>
         }
-        {gameStatus && gameStatus.guess &&
+        {gameStatus && gameStatus.winner &&
           <div className="row">
             {gameStatus.winner && <div>Winner is {gameStatus.winner}</div>}
             <div>Sentence `{gameStatus.guess}` was guessed by {gameStatus.user}</div>
