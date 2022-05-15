@@ -2,7 +2,7 @@ import React, {Component} from 'react';
 import {connect}    from 'react-redux';
 import {Form, Button, Table} from 'react-bootstrap';
 import { withRouter } from "react-router-dom";
-import {room_joined, start_game} from './PlayerList.actions';
+import {room_joined, start_game, get_categories} from './PlayerList.actions';
 
 
 class PlayerList extends Component {
@@ -10,6 +10,7 @@ class PlayerList extends Component {
     constructor(props) {
         super(props);
         props.subscribeEvents(props.socket);
+        props.getCategories();
     }
 
   renderScoreBoard = () => {
@@ -62,6 +63,7 @@ class PlayerList extends Component {
 function mapDispatchToProps(dispatch) {
     return {
         subscribeEvents: (socket) => dispatch(room_joined(socket)),
+        getCategories: () => dispatch(get_categories()),
         startGame: (socket, selectedRoom) => dispatch(start_game(socket, selectedRoom))
     }
 }
