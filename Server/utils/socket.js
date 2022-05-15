@@ -12,14 +12,6 @@ class Socket {
             [1, 5, 9], [7, 5, 3]
         ];
 
-        /* Inserting the values into the radis Database start */
-        console.log(this.data);
-        this.data.totalRoomCount = 1;
-        this.data.allRooms = JSON.stringify({
-            emptyRooms: [1],
-            fullRooms: []
-        });
-        /* Inserting the values into the radis Database ends */
     }
 
     socketEvents() {
