@@ -61,7 +61,7 @@ export const update_selected_category = (e) => {
         });
     }
 };
-export const resetBoard = (e) => {
+export const reset_board = (e) => {
     return dispatch => {
         dispatch({
             type: BoardActions.RESET_BORAD
@@ -81,7 +81,7 @@ export const getRoomInfo = (socket, roomNumber) => {
     }
 };
 
-export const resetGame = () => {
+export const reset_game = () => {
     return dispatch => {
         dispatch({
             type: RESET_GAME

@@ -5,7 +5,7 @@ import {subscribe_events, play_guess} from './Board.actions'
 import Dictaphone from './Dictaphone';
 import SpeechRecognition, { useSpeechRecognition } from 'react-speech-recognition';
 import {Form, Card} from'react-bootstrap';
-import {getRoomInfo, resetGame} from '../PlayerList/PlayerList.actions';
+import {getRoomInfo, reset_game} from '../PlayerList/PlayerList.actions';
 
 class Board extends Component {
 
@@ -23,8 +23,8 @@ class Board extends Component {
     if((prevProps.gameStatus && !prevProps.gameStatus.guess && !!this.props.gameStatus.guess)
       ||  this.props.gameStatus.status === "GAME_OVER"
     ){
-      getRoomInfo(this.props.socket);
-      resetGame();
+      this.props.getRoomInfo(this.props.socket);
+      this.props.resetGame();
       setTimeout(() => this.props.history.push('/players'), 5000);
     }
   }
@@ -124,7 +124,9 @@ class Board extends Component {
 function mapDispatchToProps(dispatch) {
   return {
     subscribeEvents: (socket, props) => dispatch(subscribe_events(socket, props.sign)),
-    playGuess: (socket, number, sentence, user) => dispatch(play_guess(socket, number, sentence, user))
+    playGuess: (socket, number, sentence, user) => dispatch(play_guess(socket, number, sentence, user)),
+    resetGame: () => dispatch(reset_game())
+
   }
 }
 
