@@ -6,11 +6,12 @@ class redisDB{
         this.redis = require("redis");
     }
 
-    connectDB(){
+    async connectDB(){
         const client = this.redis.createClient({
             host : '127.0.0.1',
             post : 6379
         });
+        await client.connect();
 
         client.on("error", (err) => {
             console.log("Error " + err);

@@ -2,9 +2,9 @@
 
 class Socket {
 
-    constructor(socket, redisDB) {
+    constructor(socket, data) {
         this.io = socket;
-        this.redisDB = redisDB;
+        this.data = data;
         /* Win combination to check winner of the Game.*/
         this.winCombination = [
             [1, 2, 3], [4, 5, 6], [7, 8, 9],
@@ -13,17 +13,17 @@ class Socket {
         ];
 
         /* Inserting the values into the radis Database start */
-        redisDB.set("totalRoomCount", 1);
-        redisDB.set("allRooms", JSON.stringify({
+        console.log(this.data);
+        this.data.totalRoomCount = 1;
+        this.data.allRooms = JSON.stringify({
             emptyRooms: [1],
             fullRooms: []
-        }));
+        });
         /* Inserting the values into the radis Database ends */
     }
 
     socketEvents() {
         const IO = this.io;
-        const redisDB = this.redisDB;
         let allRooms = null;
         let totalRoomCount = null;
 
@@ -35,8 +35,9 @@ class Socket {
             /*
              * In this Event user will create a new Room and can ask someone to join.
              */
-            socket.on('create-game', (data) => {
-                Promise.all(['totalRoomCount', 'allRooms'].map(key => redisDB.getAsync(key))).then(values => {
+            socket.on('create-game', (socketData) => {
+                Promise.all(['totalRoomCount', 'allRooms'].map(key => this.data[key])).then(values => {
+                    console.log(values);
                     const allRooms = JSON.parse(values[1]);
                     let totalRoomCount = values[0];
                     let fullRooms = allRooms['fullRooms'];
@@ -47,11 +48,11 @@ class Socket {
                         totalRoomCount++;
                         emptyRooms.push(totalRoomCount);
                         socket.join("room-" + totalRoomCount);
-                        redisDB.set("totalRoomCount", totalRoomCount);
-                        redisDB.set("allRooms", JSON.stringify({
+                        this.data.totalRoomCount = totalRoomCount;
+                        this.data.allRooms = JSON.stringify({
                             emptyRooms: emptyRooms,
                             fullRooms: fullRooms
-                        }));
+                        });
                         IO.emit('rooms-available', {
                             'totalRoomCount': totalRoomCount,
                             'fullRooms': fullRooms,
@@ -70,9 +71,9 @@ class Socket {
             /*
              * In this event will user can join the selected room
              */
-            socket.on('join-room', (data) => {
-                const roomNumber = data.roomNumber;
-                Promise.all(['totalRoomCount', 'allRooms'].map(key => redisDB.getAsync(key))).then(values => {
+            socket.on('join-room', (socketData) => {
+                const roomNumber = socketData.roomNumber;
+                Promise.all(['totalRoomCount', 'allRooms'].map(key => this.data[key])).then(values => {
                     const allRooms = JSON.parse(values[1]);
                     let totalRoomCount = values[0];
                     let fullRooms = allRooms['fullRooms'];
@@ -84,10 +85,10 @@ class Socket {
                     }
                     /* User Joining socket room */
                     socket.join("room-" + roomNumber);
-                    redisDB.set("allRooms", JSON.stringify({
+                    this.data.allRooms = JSON.stringify({
                         emptyRooms: emptyRooms,
                         fullRooms: fullRooms
-                    }));
+                    });
                     /* Getting the room number from socket */
                     const currentRoom = (Object.keys(IO.sockets.adapter.sids[socket.id]).filter(item => item != socket.id)[0]).split('-')[1];
                     IO.emit('rooms-available', {
@@ -108,9 +109,9 @@ class Socket {
              * This event will send played moves between the users
              * Also Here we will calaculate the winner.
              */
-            socket.on('send-move', (data) => {
-                const playedGameGrid = data.gameGrid;
-                const roomNumber = data.roomNumber;
+            socket.on('send-move', (socketData) => {
+                const playedGameGrid = socketData.gameGrid;
+                const roomNumber = socketData.roomNumber;
                 let winner = null;
                 /* checking the winner */
                 this.winCombination.forEach(singleCombination => {
@@ -135,14 +136,14 @@ class Socket {
 
                 if (winner === null) {
                     socket.broadcast.to("room-" + roomNumber).emit('receive-move', {
-                        'position': data.position,
-                        'playedText': data.playedText,
+                        'position': socketData.position,
+                        'playedText': socketData.playedText,
                         'winner': null
                     });
                 } else {
                     IO.sockets.in("room-" + roomNumber).emit('receive-move', {
-                        'position': data.position,
-                        'playedText': data.playedText,
+                        'position': socketData.position,
+                        'playedText': socketData.playedText,
                         'winner': winner
                     });
                 }
@@ -156,7 +157,7 @@ class Socket {
                 const rooms = Object.keys(socket.rooms);
                 const roomNumber = ( rooms[1] !== undefined && rooms[1] !== null) ? (rooms[1]).split('-')[1] : null;
                 if (rooms !== null) {
-                    Promise.all(['totalRoomCount', 'allRooms'].map(key => redisDB.getAsync(key))).then(values => {
+                    Promise.all(['totalRoomCount', 'allRooms'].map(key => this.data[key])).then(values => {
                         const allRooms = JSON.parse(values[1]);
                         let totalRoomCount = values[0];
                         let fullRooms = allRooms['fullRooms'];
@@ -171,11 +172,11 @@ class Socket {
                         } else {
                             totalRoomCount = 1;
                         }
-                        redisDB.set("totalRoomCount", totalRoomCount);
-                        redisDB.set("allRooms", JSON.stringify({
+                        this.data.totalRoomCount = totalRoomCount;
+                        this.data.allRooms = JSON.stringify({
                             emptyRooms: emptyRooms,
                             fullRooms: fullRooms
-                        }));
+                        });
                         IO.sockets.in("room-" + roomNumber).emit('room-disconnect', {id: socket.id});
                     });
                 }//if ends
