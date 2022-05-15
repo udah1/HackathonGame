@@ -26,9 +26,6 @@ class Socket {
 
     socketEvents() {
         const IO = this.io;
-        let allRooms = null;
-        let totalRoomCount = null;
-
         IO.on('connection', (socket) => {
 
             socket.setMaxListeners(20);
@@ -125,7 +122,6 @@ class Socket {
                 console.log('start-game **********************************************************', socketData);
                 const {roomNumber, category} = socketData;
                 const room = this.data.rooms[roomNumber];
-
                 intervals[roomNumber] = setInterval(() => {
                     room.gamePoints -= 10;
 
@@ -137,10 +133,7 @@ class Socket {
                        }
                     });
 
-                    if (availableIndexToReveal.length === 0) {
-                        IO.sockets.in('room-' + roomNumber).emit('all-revealed');
-                        return;
-                    }
+
                     const randomIndex= randomIntFromInterval(0, availableIndexToReveal.length - 1);
                     const index = availableIndexToReveal[randomIndex];
                     room.reveledSentence = reveledSentence.substr(0,index) + sentence[index] + reveledSentence.substr(index + 1);
@@ -149,8 +142,12 @@ class Socket {
                     IO.sockets.in('room-' + roomNumber).emit('reveal-letter', {
                         letters: [{ind: index, val: sentence[index]}],
                         score: room.gamePoints
-                    })
-                }, 10000);
+                    });
+                    if (availableIndexToReveal.length === 1) {
+                        IO.sockets.in('room-' + roomNumber).emit('all-revealed');
+                        clearInterval(intervals[roomNumber]);
+                    }
+                }, 2000);
                 const sentences = categories[category];
                 const index = randomIntFromInterval(0, sentences.length -1);
                 const sentence = sentences[index];
@@ -173,8 +170,14 @@ class Socket {
                 console.log('reveledSentence1', room.reveledSentence);
                 IO.sockets.in('room-' + roomNumber).emit('init-board', {
                     sentence: reveledSentence,
-                    score: room.gamePoints
-                })
+                    score: room.gamePoints,
+                    category
+                });
+                room.available = false;
+                const rooms = this.getAvailableRooms();
+                socket.broadcast.to('room-list').emit( 'rooms', {
+                    rooms: rooms
+                });
             });
 
 
