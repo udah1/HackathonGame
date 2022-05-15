@@ -11,9 +11,19 @@ const routes = require('./utils/routes');
 
 
 const data = {
-    totalRoomCount: 0,
-    emptyRooms: [],
-    fullRooms: []
+    rooms: {
+        1: {
+            players: {
+                'uda': {
+                    points: 100
+                }
+            },
+            isFull: false,
+            generatedClause: '',
+            selectedLetters: [],
+            gamePoints: 100,
+        }
+    }
 };
 
 class Server{
@@ -45,7 +55,6 @@ class Server{
     /* Including app Routes ends*/
 
     async appExecute(){
-
         this.appConfig();
         await this.includeRoutes();
 

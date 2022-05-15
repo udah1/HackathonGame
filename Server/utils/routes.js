@@ -7,19 +7,9 @@ class Routes{
     }
 
     appRoutes(){
-
-        /* Getting the total room count and Avaialable rooms to chat */
+        /* Getting the total room count and Available rooms to chat */
         this.app.get('/getRoomStats', (request, response) => {
-            console.log(request);
-            Promise.all(['totalRoomCount', 'allRooms'].map(key => this.data[key])).then(values => {
-                const totalRoomCount = values[0];
-                const allRooms = JSON.parse(values[1]);
-                response.status(200).json({
-                    'totalRoomCount' : totalRoomCount,
-                    'fullRooms' : allRooms['fullRooms'],
-                    'emptyRooms': allRooms['emptyRooms']
-                });
-            });
+            response.status(200).json(this.data.rooms);
         });
     }
 

@@ -4,6 +4,7 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 import './App.css';
 import Login from './containers/Login/Login.view';
 import Board from './containers/Board/Board.view';
+import Score from './containers/Score/Score.view';
 import rootReducer from './reducers';
 import {applyMiddleware, createStore} from 'redux';
 import * as io from 'socket.io-client';
@@ -29,6 +30,7 @@ class App extends Component {
                     <Routes>
                         <Route exact path='/' element={<Login socket={this.socket} />}></Route>
                         <Route exact path='/board' element={<Board socket={this.socket} />}></Route>
+                        <Route exact path='/score' element={<Score socket={this.socket} />}></Route>
                     </Routes>
                 </div>
             </Provider>
