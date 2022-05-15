@@ -2,7 +2,7 @@ import React, {Component} from 'react';
 import {connect}    from 'react-redux';
 import {Form, Button, Table} from 'react-bootstrap';
 import { withRouter } from "react-router-dom";
-import {room_joined, start_game, get_categories} from './PlayerList.actions';
+import {room_joined, start_game, get_categories, update_selected_category} from './PlayerList.actions';
 
 
 class PlayerList extends Component {
@@ -30,31 +30,38 @@ class PlayerList extends Component {
     };
 
     handleStartGame = () => {
-        const {selectedRoom, roomNumber, socket, startGame, categories, history, gameOwner} = this.props;
+        const {selectedRoom, roomNumber, socket, startGame, categories, history, gameOwner, selectedCategory} = this.props;
         const room = gameOwner ? roomNumber : selectedRoom;
-        startGame(socket, room, categories[0]);
+        startGame(socket, room, selectedCategory || categories[0]);
         history.push('/board');
     }
 
     render() {
-        const {gameOwner} = this.props;
+        const {gameOwner, categories=[], selectedCategory, updateSelectedCategory} = this.props;
+        const availableCategories = categories.map((category, index) => (<option key={category} value={category}>{category}</option>));
         return (
-            <div>
-                <Form.Label className="App-header">Wheel of Fortune</Form.Label>
-                <Table striped bordered hover size="sm" className="scoreBoard">
+            <div className="container">
+                <Form.Label className="App-header">גלגל המזל</Form.Label>
+                <Table striped bordered size="sm" className="scoreBoard">
                     <thead>
                         <tr>
                             <th style={{width: '25px'}}>#</th>
-                            <th style={{width: '200px'}}>Player name</th>
-                            <th style={{width: '250px'}}>Score</th>
+                            <th style={{width: '200px'}}>שחקן</th>
+                            <th style={{width: '250px'}}>ניקוד</th>
                         </tr>
                     </thead>
                     <tbody>
                         {this.renderScoreBoard()}
                     </tbody>
                 </Table>
-                {gameOwner && <div className="row">
-                    <Button className="col-sm-5 login-button" variant="primary" onClick={this.handleStartGame}>Start game</Button>
+                {gameOwner && <Form.Group className="mb-3">
+                    <Form.Label className="">קטגוריה</Form.Label>
+                    <Form.Control size="lg" as="select" defaultValue={selectedCategory || ""} onChange={updateSelectedCategory}>
+                        {availableCategories}
+                    </Form.Control>
+                </Form.Group>}
+                {gameOwner && <div className="row" style={{width: '100%', margin: 'auto 25%'}}>
+                    <Button className="col-sm-5 login-button" variant="primary" onClick={this.handleStartGame}>התחל</Button>
                 </div>}
             </div>
         );
@@ -66,6 +73,7 @@ function mapDispatchToProps(dispatch) {
     return {
         subscribeEvents: (socket) => dispatch(room_joined(socket)),
         getCategories: () => dispatch(get_categories()),
+        updateSelectedCategory: (e) => dispatch(update_selected_category(e)),
         startGame: (socket, selectedRoom, category) => start_game(socket, selectedRoom, category)
     }
 }

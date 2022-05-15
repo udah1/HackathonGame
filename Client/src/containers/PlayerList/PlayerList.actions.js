@@ -2,6 +2,7 @@ export const START_GAME = 'START_GAME';
 export const ROOM_JOINED = 'ROOM_JOINED';
 export const CATEGORIES_FETCHED = 'CATEGORIES_FETCHED';
 export const CATEGORIES_ERROR = 'CATEGORIES_ERROR';
+export const UPDATE_SELECTED_CATEGORY = 'UPDATE_SELECTED_CATEGORY';
 
 export const room_joined = (socket) => {
     return dispatch => {
@@ -40,4 +41,13 @@ function handleErrors(response) {
         throw Error(response.statusText);
     }
     return response;
+};
+
+export const update_selected_category = (e) => {
+    return dispatch => {
+        dispatch({
+            type: UPDATE_SELECTED_CATEGORY,
+            payload: e.target.value
+        });
+    }
 };
