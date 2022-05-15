@@ -5,11 +5,12 @@ function randomIntFromInterval(min, max) { // min and max included
     return Math.floor(Math.random() * (max - min + 1) + min)
 }
 
+const intervals = {};
+
 class Socket {
 
     getAvailableRooms = () => {
         let rooms = {};
-        console.log(this.data.rooms, 'rooms');
         Object.keys(this.data.rooms).forEach(key => {
             if (this.data.rooms[key].available) {
                 rooms[key] = this.data.rooms[key];
@@ -55,9 +56,10 @@ class Socket {
                     gamePoints: 100
                 };
                 socket.data.roomNumber = id;
+                socket.data.user = user;
                 this.data.rooms[id].players[user] = {user, points: 0};
                 console.log('room created', id);
-                IO.emit('room-created', this.data.rooms[id]);
+                socket.emit('room-created', this.data.rooms[id]);
                 const rooms = this.getAvailableRooms();
                 socket.broadcast.to('room-list').emit( 'rooms', {
                     rooms: rooms
@@ -72,7 +74,7 @@ class Socket {
                 socket.join('room-list');
                 /* Getting the room number from socket */
                 const rooms = this.getAvailableRooms();
-                IO.emit('rooms', {
+                socket.emit('rooms', {
                     rooms
                 });
             });
@@ -85,20 +87,20 @@ class Socket {
                 const {roomNumber, user} = socketData;
                 const room = this.data.rooms[roomNumber];
                 if (!room.available) {
-                    IO.emit('room-joined', {error: 'NOT-AVAILABLE'});
+                    socket.emit('room-joined', {error: 'NOT-AVAILABLE'});
                     return;
                 }
 
                 /* Getting the room number from socket */
                 if (room.players[user]) {
-                    IO.emit('room-joined', {error: 'USER-EXIST'});
+                    socket.emit('room-joined', {error: 'USER-EXIST'});
                     return;
                 }
 
                 /* User Joining socket room */
                 socket.join('room-' + roomNumber);
                 socket.data.roomNumber = roomNumber;
-                socket.data.user= user;
+                socket.data.user = user;
                 room.players[user] = {user, points: 0};
                 if (room.players.length === 4) {
                     room.available = false;
@@ -120,11 +122,11 @@ class Socket {
              * In this event will user can join the selected room
              */
             socket.on('start-game', (socketData) => {
-                console.log('start-game', socketData);
+                console.log('start-game **********************************************************', socketData);
                 const {roomNumber, category} = socketData;
                 const room = this.data.rooms[roomNumber];
 
-                room.timeout = setInterval(() => {
+                intervals[roomNumber] = setInterval(() => {
                     room.gamePoints -= 10;
 
                     const {sentence, reveledSentence} = room;
@@ -199,7 +201,7 @@ class Socket {
                         'winner': null
                     });
                 } else {
-                    clearTimeout(room.timeout);
+                    clearInterval(intervals[roomNumber]);
                     room.timeout = undefined;
                     IO.sockets.in('room-' + roomNumber).emit('receive-guess', {
                         user,
@@ -213,32 +215,46 @@ class Socket {
                 console.log('room-info', socketData);
                 const {roomNumber} = socketData;
                 const room = this.data.rooms[roomNumber];
+                socket.emit('room', {
+                    room
+                });
             });
 
 
             socket.on('leave-room', (socketData) => {
                 console.log('leave-room', socketData);
                 const {user, roomNumber} = socketData;
-                const room = this.data.rooms[roomNumber];
-                delete room.players[user];
-                if (room.players.length === 0) {
-                    delete this.data.rooms[roomNumber];
+                if (roomNumber && user) {
+                    const room = this.data.rooms[roomNumber];
+                    delete room.players[user];
+                    if (Object.keys(room.players).length === 0) {
+                        delete this.data.rooms[roomNumber];
+                    }
+                    const rooms = this.getAvailableRooms();
+                    socket.broadcast.to('room-list').emit( 'rooms', {
+                        rooms: rooms
+                    });
                 }
             });
-            //
-            // /*
-            //  * And we will update teh Redis DB keys.
-            //  */
-            // socket.on('disconnect', ()=> {
-            //     const {roomNumber, user} = socket.data;
-            //     if (roomNumber && user) {
-            //         const room = this.data.rooms[roomNumber];
-            //         delete room.players[user];
-            //         if (room.players.length === 0) {
-            //             delete this.data.rooms[roomNumber];
-            //         }
-            //     }
-            // });
+
+            /*
+             * And we will update teh Redis DB keys.
+             */
+            socket.on('disconnect', ()=> {
+
+                const {roomNumber, user} = socket.data;
+                if (roomNumber && user) {
+                    const room = this.data.rooms[roomNumber];
+                    delete room.players[user];
+                    if (Object.keys(room.players).length === 0) {
+                        delete this.data.rooms[roomNumber];
+                    }
+                    const rooms = this.getAvailableRooms();
+                    socket.broadcast.to('room-list').emit( 'rooms', {
+                        rooms: rooms
+                    });
+                }
+            });
 
         });
     }
