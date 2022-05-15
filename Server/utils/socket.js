@@ -53,9 +53,10 @@ class Socket {
                     players: {},
                     available: true
                 };
+                socket.data.roomId = id;
                 this.data.rooms[id].players[user] = {user, points: 0};
-                console.log('room created', id);
-                IO.emit('room-created', {id});
+                console.log('room created', this.data.rooms[id]);
+                IO.emit('room-created', this.data.rooms[id]);
                 const rooms = this.getAvailableRooms();
                 socket.broadcast.to("room-list").emit( 'rooms', {
                     rooms: rooms
@@ -95,6 +96,7 @@ class Socket {
 
                 /* User Joining socket room */
                 socket.join("room-" + roomNumber);
+                socket.data.roomId = id;
                 room.players[user] = {user, points: 0};
                 if (room.players.length === 4) {
                     room.available = false;
@@ -204,11 +206,10 @@ class Socket {
 
 
             /*
-             * Here we will remove the room number from fullrooms array
              * And we will update teh Redis DB keys.
              */
             socket.on('disconnect', ()=> {
-                console.log(socket, 'socket');
+                console.log(socket.data, 'socket');
             });
 
         });
