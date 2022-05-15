@@ -10,7 +10,7 @@ class Routes{
     appRoutes(){
         /* Getting the categories */
         this.app.get('/categories', (request, response) => {
-            response.status(200).json(Object.keys(categories));
+            response.status(200).json(Object.keys(categories.categories));
         });
     }
 
