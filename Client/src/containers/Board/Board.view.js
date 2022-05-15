@@ -8,7 +8,8 @@ class Board extends Component {
     constructor(props) {
         super(props);
         this.state = {
-          sentence: "Hello my name is Slim Shady"
+            sentence: "Elephant ",
+            guessedLetters: ['L', 'H', 'A', "S", "B", "I", "E", "M"]
         };
         this.gamePlainGrid = [[1, 2, 3], [4, 5, 6], [7, 8, 9]];
         // this.socket = props.socket;
@@ -19,11 +20,14 @@ class Board extends Component {
         return this.props.gameGrid[number] || ''
     };
     renderWord = (word) => {
+        const {guessedLetters} = this.state;
         return word.split('').map( letter => {
+            const letterFormatted = letter.toUpperCase();
+            const isIncluded = guessedLetters.includes(letterFormatted);
             return (
-              <Card style={{ width: '18rem' }}>
+              <Card className={isIncluded &&  'CardSelected'}>
                   <Card.Body>
-                      <Card.Title>{letter.toUpperCase()}</Card.Title>
+                      <Card.Title>{isIncluded ? letterFormatted : " "}</Card.Title>
                   </Card.Body>
               </Card>
             );
@@ -34,9 +38,14 @@ class Board extends Component {
         const myArray = sentence.split(" ");
         return myArray.map( item => {
             return (
-              <div>
-                  {this.renderWord(item)}
-              </div>
+              <>
+                  <div className="row sentenceRow">
+                      {this.renderWord(item)}
+                  </div>
+                  <div className="row sentenceRowDivider">
+                  </div>
+              </>
+
             );
         });
     };
@@ -48,8 +57,7 @@ class Board extends Component {
         if(!sentence) return (<></>);
         return (
             <div className="container containerBoard">
-                <div className="row heading-row">
-                    {sentence}
+                <div className="row">
                     {this.renderSentence()}
                 </div>
             </div>

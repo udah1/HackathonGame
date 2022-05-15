@@ -46,26 +46,37 @@
   }
 }
 
+.containerBoard .sentenceRow {
+  width: fit-content;
+}
+.containerBoard .sentenceRowDivider{
+  width: 50px;
+}
 .containerBoard .card {
   flex-direction: row;
   max-width: fit-content;
-  margin: 0 5px 0 0;
+  margin: 10px 5px 0 0;
   padding: 0;
   align-content: center;
+  color: white;
+}
+.containerBoard .CardSelected {
+  color: black;
+  background-color: gold;
 }
 .containerBoard .card .card-body {
   width: 50px;
   max-width: 50px;
+  height: 50px;
+  max-height: 50px;
   margin: 0;
   padding: 0;
-  place-self: center;
+  display: flex;
+  place-content: center;
 }
 .containerBoard .card .card-body div.card-title {
-  margin: 8px;
-  width: 50px;
-  height: 50px;
   display: flex;
   align-items: center;
   justify-content: center;
-  color: red;
+  font-size: 26px;
 }
