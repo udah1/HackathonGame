@@ -5,7 +5,7 @@ import {subscribe_events, play_guess} from './Board.actions'
 import Dictaphone from './Dictaphone';
 import SpeechRecognition, { useSpeechRecognition } from 'react-speech-recognition';
 import {Form, Card} from'react-bootstrap';
-import {getRoomInfo, reset_game} from '../PlayerList/PlayerList.actions';
+import {get_room_info, reset_game} from '../PlayerList/PlayerList.actions';
 
 class Board extends Component {
 
@@ -125,6 +125,7 @@ function mapDispatchToProps(dispatch) {
   return {
     subscribeEvents: (socket, props) => dispatch(subscribe_events(socket, props.sign)),
     playGuess: (socket, number, sentence, user) => dispatch(play_guess(socket, number, sentence, user)),
+    getRoomInfo: (socket) => dispatch(get_room_info(socket)),
     resetGame: () => dispatch(reset_game())
 
   }

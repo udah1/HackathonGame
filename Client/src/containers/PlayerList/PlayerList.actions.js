@@ -69,7 +69,7 @@ export const reset_board = (e) => {
     }
 };
 
-export const getRoomInfo = (socket, roomNumber) => {
+export const get_room_info = (socket, roomNumber) => {
     socket.emit('room-info', {roomNumber});
     return dispatch => {
         socket.on('room-info', (res) => {
