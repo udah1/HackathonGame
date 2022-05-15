@@ -13,7 +13,7 @@ export const subscribe_events = (socket) => {
             });
         });
 
-        socket.on('recieve-letter', (res) => {
+        socket.on('reveal-letter', (res) => {
             dispatch({
                 type: RECIEVE_LETTER,
                 payload: res

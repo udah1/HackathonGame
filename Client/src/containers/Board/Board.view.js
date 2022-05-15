@@ -11,30 +11,12 @@ class Board extends Component {
     //props.subscribeEvents(this.socket, props);
   }
 
-  renderWord = (word) => {
-    const {lastLetterIndexUpdated} = this.props;
-    return word.split('').map(letter => {
-      const letterFormatted = letter.toUpperCase();
-      const isIncluded = letter !== '*';
-      let styleCalc = isIncluded ? 'CardSelected' : '';
-      if (lastLetterIndexUpdated && lastLetterIndexUpdated.length) {
-        styleCalc = styleCalc + (lastLetterIndexUpdated.includes(letterFormatted) ? ' CardSelectedLast' : '');
-      }
 
-      return (
-        <Card className={styleCalc}>
-          <Card.Body>
-            <Card.Title>{isIncluded ? letterFormatted : " "}</Card.Title>
-          </Card.Body>
-        </Card>
-      );
-    })
-  };
   renderSentence = () => {
     const {sentence, lastLetterIndexUpdated} = this.props;
     const myArray = sentence.split(" ");
     let index = 0;
-    return myArray.map((item,indexj) => {
+    return myArray.map((item, indexj) => {
       return (
         <>
           <div className="row sentenceRow" key={indexj}>
@@ -50,7 +32,7 @@ class Board extends Component {
                 index++;
 
                 return (
-                  <Card className={styleCalc} key={index-1}>
+                  <Card className={styleCalc} key={index - 1}>
                     <Card.Body>
                       <Card.Title>{isIncluded ? letterFormatted : " "}</Card.Title>
                     </Card.Body>
