@@ -49,12 +49,6 @@ export default (state = initial_state, action) => {
                     gameOwner: action.payload.gameOwner,
                     roomCreated: true
         };
-        case START_GAME:
-            return {
-                ...state,
-                roomNumber: action.payload.roomNumber,
-            show: false
-        };
 
         default:
             return state
