@@ -13,7 +13,14 @@ class PlayerList extends Component {
         props.getCategories();
     }
 
-  renderScoreBoard = () => {
+    componentDidUpdate(prevProps, prevState, snapshot) {
+        const {gameStarted, gameOwner, history} = this.props;
+        if(gameStarted && !gameOwner) {
+            history.push('/board');
+        }
+    }
+
+    renderScoreBoard = () => {
         const {gamePlayers} = this.props;
         const players = Object.keys(gamePlayers || []);
 
