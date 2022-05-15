@@ -23,9 +23,9 @@ export const join_room = (socket, roomNumber) => {
     };
 };
 
-export const create_new_room = (socket) => {
+export const create_new_room = (socket, userName) => {
     return dispatch => {
-        socket.emit('create-room', {'createroom': 1});
+        socket.emit('create-room', {'createroom': 1, 'userName': userName});
         socket.on('new-room', (res) => {
             dispatch({
                 type: ROOM_CREATED,

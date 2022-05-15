@@ -19,16 +19,12 @@ export default (state = initial_state, action) => {
             };
         case JOIN_ROOM:
             return {
-                ...state,
-                myTurn: false,
-                sign: 'O'
+                ...state
             };
         case ROOM_CREATED:
             return {
                 ...state,
-                roomNumber: action.payload.roomNumber,
-                myTurn: true,
-                sign: 'X'
+                roomNumber: action.payload.roomNumber
             };
         default:
             return state
