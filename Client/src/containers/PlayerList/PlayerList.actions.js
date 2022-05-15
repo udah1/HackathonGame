@@ -1,6 +1,7 @@
 import * as BoardActions from '../Board/Board.actions';
 export const START_GAME = 'START_GAME';
 export const ROOM_JOINED = 'ROOM_JOINED';
+export const ROOM_INFO = 'ROOM_INFO';
 export const CATEGORIES_FETCHED = 'CATEGORIES_FETCHED';
 export const CATEGORIES_ERROR = 'CATEGORIES_ERROR';
 export const UPDATE_SELECTED_CATEGORY = 'UPDATE_SELECTED_CATEGORY';
@@ -56,6 +57,18 @@ export const resetGame = (e) => {
     return dispatch => {
         dispatch({
             type: BoardActions.RESET_BORAD
+        });
+    }
+};
+
+export const getRoomInfo = (socket, roomNumber) => {
+    socket.emit('room-info', {roomNumber});
+    return dispatch => {
+        socket.on('room-info', (res) => {
+            dispatch({
+                type: ROOM_INFO,
+                payload: res
+            });
         });
     }
 };

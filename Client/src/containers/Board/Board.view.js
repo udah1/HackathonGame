@@ -5,6 +5,7 @@ import {subscribe_events, play_guess} from './Board.actions'
 import Dictaphone from './Dictaphone';
 import SpeechRecognition, { useSpeechRecognition } from 'react-speech-recognition';
 import {Form, Card} from'react-bootstrap';
+import {getRoomInfo} from '../PlayerList/PlayerList.actions';
 
 class Board extends Component {
 
@@ -22,6 +23,7 @@ class Board extends Component {
     if((prevProps.gameStatus && !prevProps.gameStatus.guess && !!this.props.gameStatus.guess)
       ||  this.props.gameStatus.status === "GAME_OVER"
     ){
+      getRoomInfo(this.props.socket);
       setTimeout(() => this.props.history.push('/players'), 5000);
     }
   }

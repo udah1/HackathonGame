@@ -7,6 +7,8 @@ import {
     UPDATE_USER_NAME
 } from './Login.actions';
 
+import * as PlayerAction from '../PlayerList/PlayerList.actions';
+
 const initial_state = {
     user: "",
     rooms: [],
@@ -41,6 +43,14 @@ export default (state = initial_state, action) => {
                 gamePlayers: action.payload.room.players,
                 roomJoined: true
         };
+        case PlayerAction.ROOM_INFO:
+            return {
+                ...state,
+                lastRoomJoiner: action.payload.new,
+                currentRoom: action.payload.room,
+                gamePlayers: action.payload.room.players,
+                roomJoined: true
+            };
         case ROOM_CREATED:
                 return {
                     ...state,

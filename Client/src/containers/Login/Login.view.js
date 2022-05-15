@@ -51,7 +51,7 @@ class Login extends Component {
                             {availableRooms}
                         </Form.Control>
                     </Form.Group>
-                    <div className="row">
+                    <div className="row loginButtons">
                         <Button className="col-sm-5 login-button" variant="primary" onClick={this.handleCreateRoom}>התחל משחק חדש</Button>
                         <Button className="col-sm-5 login-button" variant="primary" onClick={this.handleJoinRoom}>הצטרף</Button>
                     </div>
