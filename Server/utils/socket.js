@@ -122,6 +122,7 @@ class Socket {
                 console.log('start-game **********************************************************', socketData);
                 const {roomNumber, category} = socketData;
                 const room = this.data.rooms[roomNumber];
+                room.hasWinner = false;
                 intervals[roomNumber] = setInterval(() => {
                     room.gamePoints -= 10;
 
@@ -147,7 +148,7 @@ class Socket {
                         IO.sockets.in('room-' + roomNumber).emit('all-revealed');
                         clearInterval(intervals[roomNumber]);
                     }
-                }, 2000);
+                }, 5000);
                 const sentences = categories[category];
                 const index = randomIntFromInterval(0, sentences.length -1);
                 const sentence = sentences[index];
@@ -191,7 +192,9 @@ class Socket {
                 const room = this.data.rooms[roomNumber];
                 const {sentence} = room;
                 let winner;
-
+                if (room.hasWinner) {
+                    return;
+                }
                 if (sentence.toLowerCase().indexOf(guess.toLowerCase()) >= 0) {
                     winner = user;
                     room.players[user].points += room.gamePoints;
@@ -206,6 +209,7 @@ class Socket {
                 } else {
                     clearInterval(intervals[roomNumber]);
                     room.timeout = undefined;
+                    room.hasWinner = true;
                     IO.sockets.in('room-' + roomNumber).emit('receive-guess', {
                         user,
                         'guess': guess,
@@ -218,7 +222,7 @@ class Socket {
                 console.log('room-info', socketData);
                 const {roomNumber} = socketData;
                 const room = this.data.rooms[roomNumber];
-                socket.emit('room', {
+                socket.emit('room-info', {
                     room
                 });
             });
