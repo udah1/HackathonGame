@@ -95,6 +95,8 @@ class Board extends Component {
   render() {
     const {sentence, scoreForGame, gameStatus, selectedCategory} = this.props;
     if (!sentence) return (<></>);
+    const isGameOver = gameStatus && gameStatus.status === GAME_OVER;
+    const isWinner = gameStatus && gameStatus.winner;
     return (
       <div className="container containerBoard">
         <div className="row container-board-view">
@@ -112,9 +114,9 @@ class Board extends Component {
           <div className="row sentence">
             {this.renderSentence()}
           </div>
-          {gameStatus && gameStatus.status === "GAME_OVER" && <div className="row no-winner">אף אחד לא ניחש את התשובה</div>
+          {isGameOver && <div className="row no-winner">אף אחד לא ניחש את התשובה</div>
           }
-          {(gameStatus && gameStatus.winner) &&
+          {isWinner &&
           <div className="row game-win">
             הזוכה הוא {gameStatus.winner}
           </div>
