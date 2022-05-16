@@ -6,12 +6,12 @@ import Board from './containers/Board/Board.view';
 import PlayerList from './containers/PlayerList/PlayerList.view';
 import * as io from 'socket.io-client';
 import {Switch, Route} from 'react-router-dom';
-
+import { SERVER_URL} from './Util';
 class App extends Component {
 
     constructor(props) {
         super(props)
-        this.socket = io.connect('localhost:4000');
+        this.socket = io.connect(SERVER_URL);
     }
 
     render() {

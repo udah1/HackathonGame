@@ -1,4 +1,5 @@
 import * as BoardActions from '../Board/Board.actions';
+import { SERVER_URL} from '../../Util';
 export const START_GAME = 'START_GAME';
 export const ROOM_JOINED = 'ROOM_JOINED';
 export const ROOM_INFO = 'ROOM_INFO';
@@ -31,7 +32,7 @@ export const start_game = (socket, selectedRoom, category) => {
 
 export const get_categories = () => {
     return dispatch => {
-        return fetch("http://localhost:4000/categories")
+        return fetch(`${SERVER_URL}/categories`)
             .then(handleErrors)
             .then(res => res.json())
     .then(res => dispatch({
