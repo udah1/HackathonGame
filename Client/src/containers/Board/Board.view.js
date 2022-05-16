@@ -119,6 +119,8 @@ class Board extends Component {
           {isWinner &&
           <div className="row game-win">
             הזוכה הוא {gameStatus.winner}
+            <div/>
+            התשובה היא: {gameStatus.guess}
           </div>
           }
           <Dictaphone submitGuess={(transcript, interimTranscript) => this.submitGuess(transcript, interimTranscript)}/>
