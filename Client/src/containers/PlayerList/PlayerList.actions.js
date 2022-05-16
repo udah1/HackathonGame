@@ -82,6 +82,10 @@ export const get_room_info = (socket, roomNumber) => {
     }
 };
 
+export const leave_room = (socket, roomNumber, user) => {
+    socket.emit('leave-room', {user, roomNumber});
+};
+
 export const reset_game = () => {
     return dispatch => {
         dispatch({

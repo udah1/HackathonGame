@@ -2,7 +2,7 @@ import React, {Component} from 'react';
 import {connect}    from 'react-redux';
 import {Form, Button, Table} from 'react-bootstrap';
 import { withRouter } from "react-router-dom";
-import {room_joined, start_game, get_categories, update_selected_category, reset_board} from './PlayerList.actions';
+import {room_joined, start_game, get_categories, update_selected_category, reset_board, leave_room} from './PlayerList.actions';
 
 
 class PlayerList extends Component {
@@ -76,7 +76,10 @@ class PlayerList extends Component {
                 </div>}
 
                 <div className="row" style={{width: '100%', margin: 'auto 25%'}}>
-                    <Button className="col-sm-5 mt-3 login-button" variant="primary" onClick={() => this.props.history.push('/')}>חזרה ללובי</Button>
+                    <Button className="col-sm-5 mt-3 login-button" variant="primary" onClick={() => {
+                        this.props.leaveRoom(this.props.socket, this.props.roomNumber, this.props.user);
+                        this.props.history.push('/');
+                    }}>חזרה ללובי</Button>
                 </div>
             </div>
         );
@@ -90,7 +93,8 @@ function mapDispatchToProps(dispatch) {
         getCategories: () => dispatch(get_categories()),
         updateSelectedCategory: (e) => dispatch(update_selected_category(e)),
         resetBoard: () => dispatch(reset_board()),
-        startGame: (socket, selectedRoom, category) => start_game(socket, selectedRoom, category)
+        startGame: (socket, selectedRoom, category) => start_game(socket, selectedRoom, category),
+        leaveRoom: (socket, roomNumber, user) => leave_room(socket, roomNumber, user)
     }
 }
 
