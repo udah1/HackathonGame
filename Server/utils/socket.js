@@ -148,7 +148,7 @@ class Socket {
                         IO.sockets.in('room-' + roomNumber).emit('all-revealed');
                         clearInterval(intervals[roomNumber]);
                     }
-                }, 1000);
+                }, 10000);
                 const sentences = categories[category];
                 const index = randomIntFromInterval(0, sentences.length -1);
                 const sentence = sentences[index];
