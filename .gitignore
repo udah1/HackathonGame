@@ -8,7 +8,10 @@
 
 */package-lock.json
 */.idea
+/.idea/*
+.idea/*
 .idea/workspace.xml
+/.idea/workspace.xml
 
 # testing
 */coverage

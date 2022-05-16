@@ -28,7 +28,12 @@ class Server{
         this.app = express();
         this.app.use(cors());
         this.http = http.Server(this.app);
-        this.socket = socketio(this.http);
+        this.socket = socketio(this.http, {
+            cors: {
+                origin: "*",
+                methods: ["GET", "POST"]
+            }
+        });
 
     }
 
@@ -36,7 +41,6 @@ class Server{
         this.app.use(
             bodyParser.json()
         );
-
     }
 
     /* Including app Routes starts*/
