@@ -6,8 +6,7 @@ import {
     RESET_GAME
 } from './PlayerList.actions';
 
-const initial_state = {
-}
+const initial_state = {};
 
 export default (state = initial_state, action) => {
 

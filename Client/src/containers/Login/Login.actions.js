@@ -60,7 +60,7 @@ function handleErrors(response) {
         throw Error(response.statusText);
     }
     return response;
-};
+}
 
 export const update_selected_room = (e) => {
     return dispatch => {

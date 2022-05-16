@@ -1,5 +1,4 @@
 import {
-    START_GAME,
     ROOM_CREATED,
     ROOMS_FETCHED,
     ROOM_JOINED,
@@ -15,10 +14,9 @@ const initial_state = {
     rooms: [],
     selectedRoom: null,
     roomCreated: false
-}
+};
 
 export default (state = initial_state, action) => {
-
     switch (action.type) {
         case UPDATE_SELECTED_ROOM:
             return {
