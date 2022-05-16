@@ -48,35 +48,36 @@ class PlayerList extends Component {
         const {gameOwner, categories=[], selectedCategory, updateSelectedCategory, roomNumber} = this.props;
         const availableCategories = categories.map((category, index) => (<option key={category} value={category}>{category}</option>));
         return (
-            <div className="container">
+            <div className="container container-player-view">
+                <div className="row player-view">
+                    <Form.Label className="App-header">גלגל המזל</Form.Label>
+                    <div/>
+                    <Form.Label className="">מספר חדר: {roomNumber}</Form.Label>
+                    <Table striped bordered size="sm" className="scoreBoard">
+                        <thead>
+                            <tr>
+                                <th style={{width: '25px'}}>#</th>
+                                <th style={{width: '200px'}}>שחקן</th>
+                                <th style={{width: '250px'}}>ניקוד</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {this.renderScoreBoard()}
+                        </tbody>
+                    </Table>
+                    {gameOwner && <Form.Group className="mb-3">
+                        <Form.Label className="">קטגוריה</Form.Label>
+                        <Form.Control size="lg" as="select" defaultValue={selectedCategory || ""} onChange={updateSelectedCategory}>
+                            {availableCategories}
+                        </Form.Control>
+                    </Form.Group>}
+                    {gameOwner && <div className="row">
+                        <Button className="col-sm-5 login-button" variant="primary" onClick={this.handleStartGame}>התחל</Button>
+                    </div>}
 
-                <Form.Label className="App-header">גלגל המזל</Form.Label>
-                <div/>
-                <Form.Label className="">מספר חדר: {roomNumber}</Form.Label>
-                <Table striped bordered size="sm" className="scoreBoard">
-                    <thead>
-                        <tr>
-                            <th style={{width: '25px'}}>#</th>
-                            <th style={{width: '200px'}}>שחקן</th>
-                            <th style={{width: '250px'}}>ניקוד</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        {this.renderScoreBoard()}
-                    </tbody>
-                </Table>
-                {gameOwner && <Form.Group className="mb-3">
-                    <Form.Label className="">קטגוריה</Form.Label>
-                    <Form.Control size="lg" as="select" defaultValue={selectedCategory || ""} onChange={updateSelectedCategory}>
-                        {availableCategories}
-                    </Form.Control>
-                </Form.Group>}
-                {gameOwner && <div className="row" style={{width: '100%', margin: 'auto 25%'}}>
-                    <Button className="col-sm-5 login-button" variant="primary" onClick={this.handleStartGame}>התחל</Button>
-                </div>}
-
-                <div className="row" style={{width: '100%', margin: 'auto 25%'}}>
-                    <Button className="col-sm-5 mt-3 login-button" variant="primary" onClick={() => this.props.history.push('/')}>חזרה ללובי</Button>
+                    <div className="row">
+                        <Button className="col-sm-5 mt-3 login-button" variant="primary" onClick={() => this.props.history.push('/')}>חזרה ללובי</Button>
+                    </div>
                 </div>
             </div>
         );
