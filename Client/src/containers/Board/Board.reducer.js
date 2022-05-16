@@ -43,7 +43,6 @@ export default (state = initial_state, action) => {
             console.log('receive guess ' + JSON.stringify(action.payload));
             return {
                 ...state,
-                sentence: action.payload.guess,
                 gameStatus: {
                     ...action.payload,
                     status: "GUESSED"
