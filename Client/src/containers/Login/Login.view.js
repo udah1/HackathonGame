@@ -1,5 +1,5 @@
 import React, {Component} from 'react';
-import {subscribe_events, join_room, create_new_room, update_selected_room, update_user_name} from './Login.actions';
+import {subscribe_events, join_room, create_new_room, update_selected_room, update_user_name, clear_room} from './Login.actions';
 import {connect} from 'react-redux';
 import {Form, Button} from'react-bootstrap';
 import { withRouter } from "react-router-dom";
@@ -7,8 +7,9 @@ import { withRouter } from "react-router-dom";
 class Login extends Component {
 
     constructor(props) {
-        super(props)
+        super(props);
         props.subscribeEvents(props.socket);
+        props.clearRoom();
     }
 
     componentDidUpdate(prevProps, prevState, snapshot) {
@@ -67,7 +68,8 @@ function mapDispatchToProps(dispatch, ownProps) {
         joinRoom: (socket, selectedRoom, user) => dispatch(join_room(socket, selectedRoom, user)),
         createRoom: (socket, user) => dispatch(create_new_room(socket, user)),
         updateSelectedRoom: (e) => dispatch(update_selected_room(e)),
-        updateUserName: (e) => dispatch(update_user_name(e))
+        updateUserName: (e) => dispatch(update_user_name(e)),
+        clearRoom: (e) => dispatch(clear_room())
     }
 }
 

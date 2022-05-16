@@ -45,11 +45,14 @@ class PlayerList extends Component {
     }
 
     render() {
-        const {gameOwner, categories=[], selectedCategory, updateSelectedCategory} = this.props;
+        const {gameOwner, categories=[], selectedCategory, updateSelectedCategory, roomNumber} = this.props;
         const availableCategories = categories.map((category, index) => (<option key={category} value={category}>{category}</option>));
         return (
             <div className="container">
+
                 <Form.Label className="App-header">גלגל המזל</Form.Label>
+                <div/>
+                <Form.Label className="">מספר חדר: {roomNumber}</Form.Label>
                 <Table striped bordered size="sm" className="scoreBoard">
                     <thead>
                         <tr>
@@ -71,6 +74,10 @@ class PlayerList extends Component {
                 {gameOwner && <div className="row" style={{width: '100%', margin: 'auto 25%'}}>
                     <Button className="col-sm-5 login-button" variant="primary" onClick={this.handleStartGame}>התחל</Button>
                 </div>}
+
+                <div className="row" style={{width: '100%', margin: 'auto 25%'}}>
+                    <Button className="col-sm-5 mt-3 login-button" variant="primary" onClick={() => this.props.history.push('/')}>חזרה ללובי</Button>
+                </div>
             </div>
         );
     }

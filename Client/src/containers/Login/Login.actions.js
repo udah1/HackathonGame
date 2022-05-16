@@ -3,6 +3,7 @@ export const UPDATE_USER_NAME = 'UPDATE_USER_NAME';
 export const ROOMS_FETCHED = 'ROOMS_FETCHED';
 export const ROOM_JOINED = 'ROOM_JOINED';
 export const ROOM_CREATED = 'ROOM_CREATED';
+export const ROOM_CLEAR = 'ROOM_CLEAR';
 
 export const subscribe_events = (socket) => {
     socket.emit('room-list');
@@ -75,6 +76,15 @@ export const update_user_name = (e) => {
         dispatch({
             type: UPDATE_USER_NAME,
             payload: e.target.value
+        });
+    }
+};
+
+
+export const clear_room = (e) => {
+    return dispatch => {
+        dispatch({
+            type: ROOM_CLEAR
         });
     }
 };

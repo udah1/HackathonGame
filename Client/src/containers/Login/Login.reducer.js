@@ -3,6 +3,7 @@ import {
     ROOM_CREATED,
     ROOMS_FETCHED,
     ROOM_JOINED,
+    ROOM_CLEAR,
     UPDATE_SELECTED_ROOM,
     UPDATE_USER_NAME
 } from './Login.actions';
@@ -35,6 +36,8 @@ export default (state = initial_state, action) => {
                     rooms: action.payload.rooms,
                     selectedRoom: state.selectedRoom || action.payload.selectedRoom
         };
+        case ROOM_CLEAR:
+            return initial_state;
         case ROOM_JOINED:
             return {
                 ...state,
