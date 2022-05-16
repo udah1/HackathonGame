@@ -1,1 +1,1 @@
-export const SERVER_URL = 'localhost:4000';
+export const SERVER_URL = 'https://hackathon-guess-game-server.herokuapp.com';
