@@ -35,11 +35,7 @@ export default (state = initial_state, action) => {
                     selectedRoom: state.selectedRoom || action.payload.selectedRoom
         };
         case ROOM_CLEAR:
-            return {
-                rooms: [],
-                selectedRoom: null,
-                roomCreated: false
-            };
+            return initial_state;
         case ROOM_JOINED:
             return {
                 ...state,

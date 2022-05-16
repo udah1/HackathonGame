@@ -235,8 +235,10 @@ class Socket {
                 const {user, roomNumber} = socketData;
                 if (roomNumber && user) {
                     const room = this.data.rooms[roomNumber];
-                    delete room.players[user];
-                    if (Object.keys(room.players).length === 0) {
+                    if (room.players) {
+                        delete room.players[user];
+                    }
+                    if (!room.players || Object.keys(room.players).length === 0) {
                         delete this.data.rooms[roomNumber];
                     }
                     const rooms = this.getAvailableRooms();
@@ -250,12 +252,14 @@ class Socket {
              * And we will update teh Redis DB keys.
              */
             socket.on('disconnect', ()=> {
-
+                console.log('disconnect');
                 const {roomNumber, user} = socket.data;
                 if (roomNumber && user) {
                     const room = this.data.rooms[roomNumber];
-                    delete room.players[user];
-                    if (Object.keys(room.players).length === 0) {
+                    if (room.players) {
+                        delete room.players[user];
+                    }
+                    if (!room.players || Object.keys(room.players).length === 0) {
                         delete this.data.rooms[roomNumber];
                     }
                     const rooms = this.getAvailableRooms();
