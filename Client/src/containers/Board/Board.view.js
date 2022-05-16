@@ -6,6 +6,7 @@ import Dictaphone from './Dictaphone';
 import SpeechRecognition, { useSpeechRecognition } from 'react-speech-recognition';
 import {Form, Card} from'react-bootstrap';
 import {get_room_info, reset_game} from '../PlayerList/PlayerList.actions';
+import {GAME_OVER} from './Board.actions';
 
 class Board extends Component {
 
@@ -20,8 +21,9 @@ class Board extends Component {
     SpeechRecognition.startListening({ continuous: true, language: 'he-IL' });
   }
   componentDidUpdate(prevProps, prevState, snapshot) {
-    if((prevProps.gameStatus && !prevProps.gameStatus.winner && !!this.props.gameStatus.winner)
-      ||  this.props.gameStatus.status === "GAME_OVER")
+    const {gameStatus} = this.props;
+    if((prevProps.gameStatus && !prevProps.gameStatus.winner && !!gameStatus.winner)
+      ||  (prevProps.gameStatus.winner !==  GAME_OVER && gameStatus.status === GAME_OVER))
     {
       const {gameOwner , roomNumber, selectedRoom} = this.props;
       this.props.resetGame();
@@ -92,8 +94,6 @@ class Board extends Component {
 
   render() {
     const {sentence, scoreForGame, gameStatus, selectedCategory} = this.props;
-    const {selectedRoom, gameOwner, roomNumber} = this.props;
-    console.log("**********  " + JSON.stringify(gameStatus));
     if (!sentence) return (<></>);
     return (
       <div className="container containerBoard">
