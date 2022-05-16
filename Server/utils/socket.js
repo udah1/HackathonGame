@@ -214,7 +214,7 @@ class Socket {
                     console.log('winner is: ', winner);
                     IO.sockets.in('room-' + roomNumber).emit('receive-guess', {
                         user,
-                        'guess': guess,
+                        'guess': sentence,
                         'winner': winner
                     });
                 }

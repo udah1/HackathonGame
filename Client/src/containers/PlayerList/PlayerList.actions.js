@@ -32,7 +32,7 @@ export const start_game = (socket, selectedRoom, category) => {
 
 export const get_categories = () => {
     return dispatch => {
-        return fetch(`${SERVER_URL}/categories`)
+        return fetch(`http://${SERVER_URL}/categories`)
             .then(handleErrors)
             .then(res => res.json())
     .then(res => dispatch({
