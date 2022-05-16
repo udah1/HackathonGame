@@ -75,13 +75,13 @@ class PlayerList extends Component {
                         <Button className="col-sm-5 login-button" variant="primary" onClick={this.handleStartGame}>התחל</Button>
                     </div>}
 
-                <div className="row">
-                    <Button className="col-sm-5 mt-3 login-button" variant="primary" onClick={() => {
-                        this.props.leaveRoom(this.props.socket, this.props.roomNumber, this.props.user);
-                        this.props.history.push('/');
-                    }}>חזרה ללובי</Button>
+                    <div className="row">
+                        <Button className="col-sm-5 mt-3 login-button" variant="primary" onClick={() => {
+                            this.props.leaveRoom(this.props.socket, this.props.roomNumber, this.props.user);
+                            this.props.history.push('/');
+                        }}>חזרה ללובי</Button>
+                    </div>
                 </div>
-              </div>
             </div>
         );
     }
