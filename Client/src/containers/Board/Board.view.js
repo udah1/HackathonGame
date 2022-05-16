@@ -97,26 +97,30 @@ class Board extends Component {
     if (!sentence) return (<></>);
     return (
       <div className="container containerBoard">
-        <Form.Label className="App-header">גלגל המזל</Form.Label>
-        <div className="row scoreForGame">
+        <div className="row container-board-view">
+          <div className="row">
+            <Form.Label className="App-header">גלגל המזל</Form.Label>
+          </div>
+          <div className="row scoreForGame">
             <div className="col colScoreLabel">קטגוריה</div>
             <div className="col">{selectedCategory}</div>
-        </div>
-        <div className="row scoreForGame">
-          <div className="col colScoreLabel">זכייה</div>
-          <div className="col">{scoreForGame}</div>
-        </div>
-        <div className="row sentence">
-          {this.renderSentence()}
-        </div>
-        {gameStatus && gameStatus.status === "GAME_OVER" && <div className="row">אף אחד לא ניחש את התשובה</div>
-        }
-        {(gameStatus && gameStatus.winner) &&
-          <div className="row">
-            {gameStatus.winner && <div>הזוכה הוא {gameStatus.winner}</div>}
           </div>
-        }
-        <Dictaphone submitGuess={(transcript, interimTranscript) => this.submitGuess(transcript, interimTranscript)}/>
+          <div className="row scoreForGame">
+            <div className="col colScoreLabel">זכייה</div>
+            <div className="col">{scoreForGame}</div>
+          </div>
+          <div className="row sentence">
+            {this.renderSentence()}
+          </div>
+          {gameStatus && gameStatus.status === "GAME_OVER" && <div className="row no-winner">אף אחד לא ניחש את התשובה</div>
+          }
+          {(gameStatus && gameStatus.winner) &&
+          <div className="row game-win">
+            הזוכה הוא {gameStatus.winner}
+          </div>
+          }
+          <Dictaphone submitGuess={(transcript, interimTranscript) => this.submitGuess(transcript, interimTranscript)}/>
+        </div>
       </div>
 
     );

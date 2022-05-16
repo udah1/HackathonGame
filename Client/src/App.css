@@ -10,10 +10,14 @@
   text-direction: ltr;
 }
 
-.App .container {
-  width: 50%;
+.App .container.containerBoard .container-board-view , .App .container.container-player-view .player-view {
+  width: 80%;
 }
-
+.App .container {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
 .login-button{
   margin: 0 1rem;
 }
@@ -56,6 +60,14 @@
 }
 .containerBoard .sentenceRow {
   width: fit-content;
+}
+.containerBoard .no-winner {
+  color: red;
+  font-size: 26px;
+}
+.containerBoard .game-win {
+  color: #61dafb;
+  font-size: 26px;
 }
 .containerBoard .sentenceRowDivider{
   width: 50px;
@@ -109,18 +121,14 @@
 .guessedSection p {
   font-size: 80px;
 }
-
-@media (max-width: 576px) {
-  .App .container {
-    width: 75%;
-  }
+.login-form {
+  width: 85%;
+  max-width: 500px;
 }
+
 @media (max-width: 768px) {
-  .App .container {
-    width: 75%;
-  }
   .App .container .loginButtons button {
-    margin-top: 10px;
+    margin: 10px 0 0 0;
   }
 
   .App .container.containerBoard .card .card-body {
@@ -135,5 +143,11 @@
   }
   .containerBoard .card .card-body div.card-title {
     font-size: 30px;
+  }
+}
+
+@media (max-width: 1199.98px) {
+  .App .container.containerBoard .container-board-view , .App .container.container-player-view .player-view {
+    width: 70%;
   }
 }

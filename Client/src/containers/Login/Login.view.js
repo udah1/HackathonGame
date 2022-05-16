@@ -40,7 +40,7 @@ class Login extends Component {
 
         return (
             <div className="container">
-                <Form>
+                <Form className="login-form">
                     <Form.Label className="App-header">גלגל המזל</Form.Label>
                     <Form.Group className="mb-3">
                         <Form.Label className="">שם משתמש</Form.Label>
