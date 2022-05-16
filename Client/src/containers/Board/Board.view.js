@@ -21,12 +21,14 @@ class Board extends Component {
   }
   componentDidUpdate(prevProps, prevState, snapshot) {
     if((prevProps.gameStatus && !prevProps.gameStatus.winner && !!this.props.gameStatus.winner)
-      ||  this.props.gameStatus.status === "GAME_OVER"
-    ){
+      ||  this.props.gameStatus.status === "GAME_OVER")
+    {
       const {gameOwner , roomNumber, selectedRoom} = this.props;
-      this.props.getRoomInfo(this.props.socket, gameOwner ? roomNumber : selectedRoom);
       this.props.resetGame();
-      setTimeout(() => this.props.history.push('/players'), 5000);
+      setTimeout(() => {
+          this.props.getRoomInfo(this.props.socket, gameOwner ? roomNumber : selectedRoom);
+          this.props.history.push('/players');
+      }, 5000);
     }
   }
 

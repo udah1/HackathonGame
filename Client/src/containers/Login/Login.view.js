@@ -53,6 +53,7 @@ class Login extends Component {
                     </Form.Group>
                     <div className="row loginButtons">
                         <Button className="col-sm-5 login-button" variant="primary" onClick={this.handleCreateRoom}>התחל משחק חדש</Button>
+                        <div className="col-sm-1" />
                         <Button className="col-sm-5 login-button" variant="primary" onClick={this.handleJoinRoom}>הצטרף</Button>
                     </div>
                 </Form>

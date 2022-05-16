@@ -31,10 +31,16 @@ export default (state = initial_state, action) => {
                 sentence: action.payload.sentence,
                 guessedLetters: [],
                 lastLetterIndexUpdated: [],
-                scoreForGame: action.payload.score
+                scoreForGame: action.payload.score,
+                gameStatus: {
+                    user: null,
+                    winner: null,
+                    guess: null,
+                    status: 'NA'
+                }
             };
         case RECEIVE_GUESS:
-            console.log('receive guess ' + JSON.stringify(action.payload))
+            console.log('receive guess ' + JSON.stringify(action.payload));
             return {
                 ...state,
                 gameStatus: {

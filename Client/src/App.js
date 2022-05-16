@@ -11,7 +11,7 @@ class App extends Component {
 
     constructor(props) {
         super(props)
-        this.socket = io.connect('192.168.41.199:4000');
+        this.socket = io.connect('localhost:4000');
     }
 
     render() {

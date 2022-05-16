@@ -148,7 +148,7 @@ class Socket {
                         IO.sockets.in('room-' + roomNumber).emit('all-revealed');
                         clearInterval(intervals[roomNumber]);
                     }
-                }, 5000);
+                }, 1000);
                 const sentences = categories[category];
                 const index = randomIntFromInterval(0, sentences.length -1);
                 const sentence = sentences[index];
@@ -168,6 +168,7 @@ class Socket {
                 });
                 room.sentence = sentence;
                 room.reveledSentence= reveledSentence;
+                room.gamePoints = 100;
                 console.log('reveledSentence1', room.reveledSentence);
                 IO.sockets.in('room-' + roomNumber).emit('init-board', {
                     sentence: reveledSentence,
@@ -210,6 +211,7 @@ class Socket {
                     clearInterval(intervals[roomNumber]);
                     room.timeout = undefined;
                     room.hasWinner = true;
+                    console.log('winner is: ', winner);
                     IO.sockets.in('room-' + roomNumber).emit('receive-guess', {
                         user,
                         'guess': guess,
