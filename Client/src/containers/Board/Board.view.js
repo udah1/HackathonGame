@@ -35,9 +35,8 @@ class Board extends Component {
   }
 
   renderSentence = () => {
-    // const {sentence, lastLetterIndexUpdated} = this.props;
     const {sentence, lastLetterIndexUpdated, gameStatus} = this.props;
-    let mySentence = gameStatus.status === "GUESSED" ? gameStatus.guess : sentence;
+    let mySentence = gameStatus && gameStatus.status === "GUESSED" && gameStatus.guess ? gameStatus.guess : sentence;
     const myArray = mySentence.split(" ");
     let index = 0;
     return myArray.map((item, indexj) => {

@@ -45,14 +45,15 @@ class PlayerList extends Component {
     }
 
     render() {
-        const {gameOwner, categories=[], selectedCategory, updateSelectedCategory, roomNumber} = this.props;
+        const {gameOwner, categories=[], selectedCategory, updateSelectedCategory, roomNumber, selectedRoom} = this.props;
+        const room = gameOwner ? roomNumber : selectedRoom;
         const availableCategories = categories.map((category, index) => (<option key={category} value={category}>{category}</option>));
         return (
             <div className="container container-player-view">
                 <div className="row player-view">
                     <Form.Label className="App-header">גלגל המזל</Form.Label>
                     <div/>
-                    <Form.Label className="">מספר חדר: {roomNumber}</Form.Label>
+                    <Form.Label className="">מספר חדר: {room}</Form.Label>
                     <Table striped bordered size="sm" className="scoreBoard">
                         <thead>
                             <tr>
