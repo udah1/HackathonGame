@@ -35,8 +35,10 @@ class Board extends Component {
   }
 
   renderSentence = () => {
-    const {sentence, lastLetterIndexUpdated} = this.props;
-    const myArray = sentence.split(" ");
+    // const {sentence, lastLetterIndexUpdated} = this.props;
+    const {sentence, lastLetterIndexUpdated, gameStatus} = this.props;
+    let mySentence = gameStatus.status === "GUESSED" ? gameStatus.guess : sentence;
+    const myArray = mySentence.split(" ");
     let index = 0;
     return myArray.map((item, indexj) => {
       return (
